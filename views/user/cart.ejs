@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <link rel="icon" href="img/favicon.png" type="image/png" />
+    <title>Carter</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="css/bootstrap.css" />
+    <link rel="stylesheet" href="vendors/linericon/style.css" />
+    <link rel="stylesheet" href="css/font-awesome.min.css" />
+    <link rel="stylesheet" href="css/themify-icons.css" />
+    <link rel="stylesheet" href="vendors/owl-carousel/owl.carousel.min.css" />
+    <link rel="stylesheet" href="vendors/lightbox/simpleLightbox.css" />
+    <link rel="stylesheet" href="vendors/nice-select/css/nice-select.css" />
+    <link rel="stylesheet" href="vendors/animate-css/animate.css" />
+    <link rel="stylesheet" href="vendors/jquery-ui/jquery-ui.css" />
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
+    <!-- main css -->
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/responsive.css" />
+  </head>
+
+  <body>
+    <!--================Header Menu Area =================-->
+    <%-include("../partials/header") %>
+    
+    <!--================Header Menu Area =================-->
+
+    <!--================Home Banner Area =================-->
+    <!--================End Home Banner Area =================-->
+
+    <!--================Cart Area =================-->
+    <% if(!productdetail[0]){ %>
+      <div class="container-fluid wishempty mt-4 ">
+        <h3> Oops! Your Cart is Empty.</h3>
+        <img src="img/b013362e69cfe45a1dec4282a73c25ca.jpg" alt="">
+      </div>
+      <% } else{ %>
+    <section class="cart_area">
+      <div class="container">
+        <div class="mt-3 mb-3">
+          <h3>Cart</h3>
+        </div>
+        <div class="cart_inner">
+          <div class="table-responsive">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col">Product</th>
+                  <th scope="col">Price</th>
+                  <th scope="col">Quantity</th>
+                  <th scope="col">Total</th>
+                </tr>
+              </thead>
+              <tbody>
+                <%productdetail.forEach(item=>{ %>
+                <tr>
+                  <td>
+                    <div class="media">
+                      <div class="d-flex">
+                        <img
+                          src="/products/<%= item.mainImage%>"
+                          alt=""
+                          style="    object-fit: contain;
+                          height: 120px;"
+                        />
+                      </div>
+                      <div class="media-body">
+                        <p><%=item.productName%></p>
+                      </div>
+                    </div>
+                  </td>
+                  <td>
+                    <h5><%=item.price%></h5>
+                  </td>
+                  <td>
+                    <div class="product_count">
+                      <input
+                        type="text"
+                        name="qty"
+                        id="<%='q'+item._id%>"
+                        maxlength="12"
+                        value="<%=item.cartQuantity%>"
+                        title="Quantity:"
+                        class="input-text qty"
+                      />
+                      <button
+                        onclick="addquantity('<%= item._id %>', '<%=item.price%>')"
+                        class="increase items-count"
+                        type="button"
+                      >
+                        <i class="lnr lnr-chevron-up"></i>
+                      </button>
+                      <button
+                        onclick="minusQuantity('<%=item._id%>', '<%=item.price%>')"
+                        class="reduced items-count"
+                        type="button"
+                      >
+                        <i class="lnr lnr-chevron-down"></i>
+                      </button>
+                    </div>
+                  </td>
+                  <td>
+                    <h5 id="p<%=item._id%>"><%=item.price*item.cartQuantity%></h5>
+                  </td>
+                  <td>
+                    <td class="wish-delete">
+                      <a href="/remove-from-cart/<%=item._id%>" style="text-decoration: none; color: black;">
+                      <i class="ri-delete-bin-fill"></i>
+                  </a>
+                    </td>
+                  </td>
+                </tr>
+                <% }) %>
+              
+
+                <tr>
+                  <td></td>
+                  <td></td>
+                  <td>
+                    <h5>Subtotal</h5>
+                  </td>
+                  <td>
+                    <h5><%=totalAmount%>.₹</h5>
+                  </td>
+                </tr>
+
+                <tr class="out_button_area">
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td>
+                    <div class="checkout_btn_inner">
+                      <a class="gray_btn" href="/">Continue Shopping</a>
+                      <a class="main_btn" href="/checkout">Proceed to checkout</a>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+    <% } %>
+    <script src="https://unpkg.com/axios@1.1.2/dist/axios.min.js"></script>
+    <script>
+async function addquantity(id, price){
+  console.log(id)
+  let {data}=await axios.get('/add-quantity/'+id);
+  if(data.success){
+    let qunatityBox=document.getElementById('q'+id);
+    let priceBox=document.getElementById('p'+id);
+    qunatityBox.value=Number(qunatityBox.value)+1;
+    priceBox.innerText=Number(price)*Number(qunatityBox.value);
+
+    
+  }else{
+    window.location.reload()
+  }
+}
+async function minusQuantity(id, price){
+  console.log(id)
+  let {data}=await axios.get('/down-quantity/'+id);
+  if(data.success){
+    let qunatityBox=document.getElementById('q'+id);
+    let priceBox=document.getElementById('p'+id);
+
+    qunatityBox.value=Number(qunatityBox.value)-1;
+    priceBox.innerText=Number(price)*Number(qunatityBox.value);
+
+  }else{
+    window.location.reload()
+  }
+}
+
+    </script>
+    <!--================End Cart Area =================-->
+
+   
+    <!--================ End footer Area  =================-->
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="js/jquery-3.2.1.min.js"></script>
+    <script src="js/popper.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/stellar.js"></script>
+    <script src="vendors/lightbox/simpleLightbox.min.js"></script>
+    <script src="vendors/nice-select/js/jquery.nice-select.min.js"></script>
+    <script src="vendors/isotope/imagesloaded.pkgd.min.js"></script>
+    <script src="vendors/isotope/isotope-min.js"></script>
+    <script src="vendors/owl-carousel/owl.carousel.min.js"></script>
+    <script src="js/jquery.ajaxchimp.min.js"></script>
+    <script src="js/mail-script.js"></script>
+    <script src="vendors/jquery-ui/jquery-ui.js"></script>
+    <script src="vendors/counter-up/jquery.waypoints.min.js"></script>
+    <script src="vendors/counter-up/jquery.counterup.js"></script>
+    <script src="js/theme.js"></script>
+  </body>
+</html>

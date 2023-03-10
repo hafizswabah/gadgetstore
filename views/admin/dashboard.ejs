@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+  
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/admin/prooduct.css">
+    <link rel="stylesheet" href="/css/admin/dashboard.css">
+    <link rel="stylesheet" href="/css/admin/cart.css">
+    <link rel="stylesheet" href="/css/admin/whishlist.css">
+    <link rel="stylesheet" href="/css/admin/checkout.css">
+    <link rel="stylesheet" href="/css/admin/order.css">
+    <link rel="stylesheet" href="/css/admin/salesreport.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/css/splide.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/js/splide.min.js"></script>
+    <style>
+      .splide__slide img {
+    width: 100%;
+    height: auto;
+  }
+    </style>
+</head>
+<body>
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+
+
+  <%- include('../partials/adminHeader') %>
+
+  <div class="container-fluid ">
+    <div class="row" >
+
+      <div class="col-md-3 col-lg-2 d-none d-md-flex">
+        <%- include('../partials/adminSidebar')  %> 
+         </div>
+
+
+
+         <div class="col-md-9 col-lg-10 col-12">
+        <div class="dashboard container-fluid">
+          <div class="row">
+            <div class="col-lg-3 col-md-6 col-12">
+          <div class="order ">
+            <div class="round money" style="background-image: url('/img/salary.png');"></div>
+            <div class="orderDetails">
+              <div class="text">
+                <h5>
+                  <%=totalreveniue%>.₹
+                </h5>
+              </div>
+              <div>
+                <p>Total Reveniue</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-3 col-md-6 col-12">
+          <div class="order">
+            <div class="round" style="background-image: url('/img/shopping-bag.png');"></div>
+            <div class="orderDetails">
+              <div class="text">
+                <h4>
+                  <%=totalOrders%>
+                </h4>
+              </div>
+              <div>
+                <p>Total Orders</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-3 col-md-6 col-12">
+          <div class="order">
+            <div class="round pending" style="background-image: url('/img/1000_F_165902723_hmEN2uAmoD9DjbCWFcRvi7UTmcUFypxW.jpg');"></div>
+            <div class="orderDetails">
+              <div class="text">
+                <h4 style="color: rgb(255, 173, 22);">
+                  <%=totalpending%>
+                </h4>
+              </div>
+              <div>
+                <p>Pending Orders</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-3 col-md-6 col-12">
+          <div class="order">
+            <div class="round delivery" style="background-image: url('/img/delivery-man.png');"></div>
+            <div class="orderDetails">
+              <div class="text">
+                <h4 style="color: rgb(22, 255, 26);">
+                  <%=totaldispatch%>
+                </h4>
+              </div>
+              <div>
+                <p>Dispatch</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        </div>
+        </div>
+        <div style="display: flex;gap: 20px; flex-direction: column;     font-family: cursive;">
+          <div class="container" style="width:100% ;height: 30px; ">
+            <h2>Total Sales OverView</h2>
+          </div>
+          <div class="container-fluid p-1 " style="  
+        background-color: white;
+      border-radius: 5px;">
+
+            <div id="chart"></div>
+          </div>
+        </div>
+      </div>
+      <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+</body>
+<script>
+  var monthlydata = '<%=JSON.stringify(monthlydata)%>'
+
+  var options = {
+    series: [{
+      name: 'Reveniue',
+      data: JSON.parse(monthlydata)
+    }],
+    annotations: {
+      points: [{
+        x: 'Bananas',
+        seriesIndex: 0,
+        label: {
+          borderColor: '#775DD0',
+          offsetY: 0,
+          style: {
+            color: '#fff',
+            background: '#775DD0',
+          },
+          text: '',
+        }
+      }]
+    },
+    chart: {
+      height: 350,
+      type: 'bar',
+    },
+    plotOptions: {
+      bar: {
+        borderRadius: 10,
+        columnWidth: '50%',
+      }
+    },
+    dataLabels: {
+      enabled: false
+    },
+    stroke: {
+      width: 2
+    },
+
+    grid: {
+      row: {
+        colors: ['#fff', '#f2f2f2']
+      }
+    },
+    xaxis: {
+      labels: {
+        rotate: -45
+      },
+      categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+      tickPlacement: 'on'
+    },
+    yaxis: {
+      title: {
+        text: 'Reveniue',
+      },
+    },
+    fill: {
+      type: 'gradient',
+      gradient: {
+        shade: 'light',
+        type: "horizontal",
+        shadeIntensity: 0.25,
+        gradientToColors: undefined,
+        inverseColors: true,
+        opacityFrom: 0.85,
+        opacityTo: 0.85,
+        stops: [50, 0, 100]
+      },
+    }
+  };
+
+  var chart = new ApexCharts(document.querySelector("#chart"), options);
+  chart.render();
+</script>
+</html>

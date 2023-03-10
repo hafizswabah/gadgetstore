@@ -1,0 +1,372 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Jua&family=Poiret+One&display=swap');
+
+.main{
+  display: flex;
+  background-color:white;
+  width:100vw ;
+  height:100vh ;
+
+}
+
+.sub1{
+  width: 50vw;
+  background-color: black;
+}
+
+ 
+
+
+.sub2{
+  background-image: url(/Images/background.jpg);
+  background-size: cover;
+  background-position: center;
+  background-color: black;
+  
+  width:50vw ;
+  height:100vh ;
+ }
+ .image{
+  height:70vh ;
+  width:90vw ;
+  background-image:url(https://www.geospatialworld.net/wp-content/uploads/2019/09/VR11.jpeg) ;
+  background-size: contain;
+  background-position: center;
+  margin-top: 30px;
+ }
+ .mainimg{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+ }
+  .img{
+ 
+width:200px ;
+height: 200px;
+
+
+  }
+  .categorysections{
+    gap:70px ;
+    display: flex;
+    justify-content: center;
+    margin-top:40px ;
+  }
+  .first, .sec, .third, .fourth, .fifth, .sixth{
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 50%;
+  }
+  .first{
+    background-image:url(/Images/airpod.webp) ;
+   
+  }
+  .sec{
+    background-image:url(/Images/mac.jpg) ;
+    background-size: 100%;
+  }
+  .third{
+    background-image:url(/Images/iphone.jpg) ;
+    background: size 40%; ;
+    
+   
+  }
+  .fourth{
+    background-image:url(/Images/laptop.jpg) ;
+    background-size: 80%;
+  }
+  .fifth{
+    background-image:url(/Images/mobile.jpg) ;
+    background-size: 70%;
+  }
+  .sixth{
+    background-image:url(/Images/iwatch.jpg) ;
+ 
+
+  }
+  .order{
+    height:150px ; 
+    width: 255px;
+     background-color: rgb(246, 245, 245);     
+     margin-top:25px ;
+     margin-bottom:50px ;
+       padding-top: 3px;
+        padding-left:10px ;
+        display: flex;
+        border-radius:10px;
+        box-shadow:5px 5px 10px 0px rgba(128, 128, 128, 0.458);
+      
+  }
+  .round{
+    height: 100px ;
+    width: 100px;
+     border-radius: 80px;
+     
+     margin-top:20px ;
+     background-color: rgb(255, 255, 255);
+     background-image: url(/Images/shopping-bag.png);
+     background-size: cover;
+
+  }
+  .searchbox{
+    background-color: white; 
+     border:1px solid grey ;
+      display: flex; align-items: center;
+       border-radius:10px ;
+       padding: 0px 50px;
+  }
+.orderDetails{
+  margin-top:40px ;
+  margin-left:20px ;
+}
+.text h4{
+  color: rgb(245, 29, 29);
+  font-size:40px ;
+}
+.text h5{
+  color: rgb(245, 29, 29);
+  font-size:26px ;
+}
+.dashboard{
+  display: flex;
+}
+.delivery{
+  background-image: url(/Images/delivery-man.png);
+  background-size: 80%;
+  background-repeat: no-repeat;
+  background-position: center;
+  
+}
+.pending{
+  background-image: url(/Images/clock.png);
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  
+}
+.money{
+  background-image: url(/Images/business-and-finance.png);
+  background-size: 70%;
+  background-repeat: no-repeat;
+  background-position: center;
+  
+}
+.productdet input{
+  height: 50px;
+  width:300px ;
+ 
+}
+.side{
+  text-decoration: none;
+  color: black;
+  list-style: none;
+}
+.side-menu{
+margin-top: 32px;
+    margin-left: 0px;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+
+}
+.sideitems{
+  font-size:20px ;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 52px;
+  border-radius: 20px;
+  background-color: white;
+  
+}
+/* homepage */
+.categories{
+  color: black; align-items: center;display: flex;flex-direction: column;
+  height:180px ;
+  width:180px ;
+
+  border-radius:10px ;
+
+  display: flex;
+  flex-direction: column;
+ 
+  gap:10px ;
+  text-decoration: none;
+}
+
+.categories:hover{
+  box-shadow:5px 5px 5px 5px rgba(128, 128, 128, 0.458);
+}
+.catName{
+  
+  font-size: 19px;
+  font-family: 'Patrick Hand', cursive;
+ 
+
+}
+.roundCat{
+height: 110px ;
+width: 110px;
+ border-radius: 55px;
+ 
+ margin-top:20px ;
+ background-color:black;
+ background-image: url(https://static.toiimg.com/thumb/msid-81267766,imgsize-162251,width-400,resizemode-4/81267766.jpg);
+ background-size: contain;
+background-position:center;
+ background-repeat: no-repeat;
+
+}
+.categorysections{
+  display: flex;
+ gap: 40px;
+
+} 
+.tab{
+  background-image: url(https://www.washingtonpost.com/resizer/fg1mribUWgzAxcJY70JaLo65hZI=/arc-anglerfish-washpost-prod-washpost/public/GAUG7LYJPRELXM5UYB4K626KQI.jpg);
+background-size: cover;
+
+}
+.Smart{
+  background-image:url(https://www.guidingtech.com/wp-content/uploads/Best-Wallpaper-Apps-for-iPhone.jpeg) ;
+  background-size: cover;
+}
+.lap{
+  background-image:url(https://www.parallels.com/static/pl/fileadmin/res/img/homepage/2022/hero_xs.jpg) ;
+  background-size: cover;
+  background-position:center ;
+}
+.watch{
+  background-image:url(https://images.cnbctv18.com/wp-content/uploads/2019/09/2019-09-10T175338Z_1_LYNXNPEF891T6_RTROPTP_4_APPLE-IPHONE-1-768x512.jpg) ;
+  background-size: cover;
+  background-position:center ;
+}
+.Tv{
+  background-image:url(https://www.notebookcheck.net/fileadmin/Notebooks/News/_nc3/Samsung_S95B.jpg) ;
+  background-size: cover;
+ 
+}
+.offerbanner{
+  height:600px ;
+  width: 90vw;
+  margin:90px ;
+ 
+}
+.active img{
+ 
+  height:600px ;
+}
+.product{
+  margin:90px ;
+  margin-top:50px ;
+}
+.carousel-item img{
+  height:600px ;
+}
+
+.sidehead h2{
+  margin-top: 34px;
+  font-size: 17px;
+  font-family: initial;
+}
+.items{
+  width:250px ;
+
+}
+.categoryoptions{
+  display: flex;
+  flex-direction: column;
+  gap:15px ;
+  margin-top:30px ;
+}
+.sidebarpro{
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+}
+.items{
+  display: flex;
+  gap: 10px;
+}
+.searchbox button{
+  border:none ;
+  background: none;
+  outline: none;
+
+}
+.productsec{
+margin:50px ;
+
+}
+.card img{
+  min-height: 230px; 
+  max-height: 235px;
+}
+.productimg{
+display: flex;
+align-items: center;
+height:80vh ;
+justify-content: center;
+
+}
+.productimg img{
+  height:450px ;
+}
+.product-info{
+  height:80vh ;
+  background-color: rgba(190, 211, 230, 0.882);
+}
+h1 {
+  color: hsl(0, 0%, 28%);
+  font-size: 35px;
+  font-weight: bold;
+  font-family: monospace;
+  letter-spacing: 7px;
+  cursor: pointer;
+  text-transform: uppercase;
+}
+
+h1 {
+  padding: 64px;
+  background: linear-gradient(to right, hsl(0, 0%, 30%) 0, hsl(0, 0%, 100%) 10%, hsl(0, 0%, 30%) 20%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shine 6s infinite linear;
+}
+
+.card-body{
+  background-color: rgb(234, 240, 245);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+@keyframes shine {
+  0% {
+    background-position: 0px;
+  }
+  60% {
+    background-position: 550px;
+  }
+  100% {
+    background-position: 750px;
+  }
+}
+
+.side-menu{
+  gap: 8px;
+}
+.sideitems{
+  justify-content: flex-start;
+  padding-left: 20px;
+  border-radius: 8px;
+
+}
+.sideitems i{
+  margin-right: 10px;
+}
+.side-menu a{
+  padding-right: 20px;
+}

@@ -1,0 +1,88 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+  
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/admin/prooduct.css">
+    <link rel="stylesheet" href="/css/admin/dashboard.css">
+    <link rel="stylesheet" href="/css/admin/cart.css">
+    <link rel="stylesheet" href="/css/admin/whishlist.css">
+    <link rel="stylesheet" href="/css/admin/checkout.css">
+    <link rel="stylesheet" href="/css/admin/order.css">
+    <link rel="stylesheet" href="/css/admin/salesreport.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/css/splide.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/js/splide.min.js"></script>
+    <style>
+      .splide__slide img {
+    width: 100%;
+    height: auto;
+  }
+    </style>
+</head>
+<body>
+<%- include('../partials/adminHeader')  %> 
+
+<div class="container-fluid ">
+  <div class="row">
+
+    <div class="col-md-3 col-lg-2 d-none d-md-flex">
+      <%- include('../partials/adminSidebar')  %> 
+       </div>
+
+ 
+<div class="col-md-9 col-lg-10 col-12">
+    <div class="d-flex" style="display: flex;flex-direction: column;gap:20px ; margin-bottom: 80px; margin-top: 50px;" >
+      <div class="">
+        <h2>Offers</h2>
+     
+        <div><a href="/admin/add-offerpage" class="addproduct btn btn-dark text-white mt-3 " style="height: 40px; width: 150px; ; 
+   ">Add Offers </a>
+   </div>
+   </div>
+    </div>
+      <table class="table table-striped">
+        <tbody>
+          <tr>
+            <th>NO</th>
+            <th>Image</th>
+            <th>banner</th>
+            <th>URL</th>
+            <th>Action</th>
+
+          </tr>
+          <% banners.forEach((item,index)=>{ %> 
+          <tr>
+            <th><%=index+1  %> </th>
+            <th><img src="/products/<%=item.image %> " alt="" style="height:70px ;"></th>
+            <th><%=item.banner %> </th>
+            <th><%=item.url %> </th>
+         
+              <th>
+                <div class="btn-group">
+                  <button type="button" class="btn btn-dark dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                    Action
+                  </button>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="/admin/edit-offer/<%=item._id  %>">Edit</a></li>
+                    <li><a class="dropdown-item" href="/admin/delete-offer/<%=item._id  %>">delete</a></li>
+                   
+                  </ul>
+                </div>
+              </th>
+       
+
+          </tr>
+          <% }) %> 
+      
+        </tbody>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+  </body>
+  </html>

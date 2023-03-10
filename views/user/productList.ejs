@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <link rel="icon" href="img/favicon.png" type="image/png" />
+    <title>Carter</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="css/bootstrap.css" />
+    <link rel="stylesheet" href="vendors/linericon/style.css" />
+    <link rel="stylesheet" href="css/font-awesome.min.css" />
+    <link rel="stylesheet" href="css/themify-icons.css" />
+    <link rel="stylesheet" href="vendors/owl-carousel/owl.carousel.min.css" />
+    <link rel="stylesheet" href="vendors/lightbox/simpleLightbox.css" />
+    <link rel="stylesheet" href="vendors/nice-select/css/nice-select.css" />
+    <link rel="stylesheet" href="vendors/animate-css/animate.css" />
+    <link rel="stylesheet" href="vendors/jquery-ui/jquery-ui.css" />
+    <!-- main css -->
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/responsive.css" />
+  </head>
+
+  <body>
+    <!--================Header Menu Area =================-->
+    <%-include("../partials/header") %>
+
+
+    <!--================Header Menu Area =================-->
+
+    <!--================Home Banner Area =================-->
+    <!-- <section class="banner_area">
+      <div class="banner_inner d-flex align-items-center">
+        <div class="container">
+    
+              <h2>Shop Category</h2>
+        
+        </div>
+      </div>
+    </section> -->
+    <!--================End Home Banner Area =================-->
+
+    <!--================Category Product Area =================-->
+    <form method="get" action="/shop" class="cat_product_area section_gap">
+      <div class="container">
+        <div class="mt-3 mb-3">
+          <h3>Shop Category</h3>
+        </div>
+
+        <div class="row flex-row-reverse">
+          <div class="col-lg-3">
+            <div class="left_sidebar_area">
+              <aside class="left_widgets p_filter_widgets">
+                <div class="l_w_title">
+                  <h3>Browse Categories</h3>
+                </div>
+                <div class="widgets_inner">
+                  <ul class="list">
+                    <% category.forEach(item=>{%>
+                    <li class="<% if(sort==item.category){ %>active <% } %> ">
+                      <label for="<%= item._id %>"><%=item.category %></label>
+                      <input type="radio" name="sort" <% if(sort==item.category){ %>checked <% } %> onchange="this.form.submit()" id="<%= item._id %>" value="<%= item.category %>" style="visibility:hidden; height:0px;">
+                    </li>
+                    <% }) %>
+                  
+                    
+                  </ul>
+                </div>
+              </aside>
+
+            </div>
+          </div>
+          <div class="col-lg-9">
+            <div class="product_top_bar ">
+              <div class="left_dorp d-flex w-100 fs-search-header">
+                <div class="fs-search-box">
+                  <input type="text" placeholder="Search product" name="name" onchange="this.form.submit()">
+                  <button class="ti-search"></button>
+                </div>
+                <select class="sorting" name="filter"  onchange="this.form.submit()">
+                  <option value="1" <% if(filter=="1"){ %>selected <% } %>>Price Low to High</option>
+                  <option value="-1" <% if(filter=="-1"){ %>selected <% } %>>Price High to Low</option>
+                </select>
+              </div>
+            </div>
+            
+            <div class="latest_product_inner">
+              <div class="row">
+                <%products.forEach(item=>{ %>
+                  <a href="/product-info/<%=item._id%>">
+                <div class="col-lg-4 col-md-6">
+                  <div class="single-product">
+                    <div class="product-img">
+                      <img class="card-img" src="/products/<%= item.mainImage%>"alt=""/>
+                      <div class="p_icon">
+                        <a href="#">
+                          <i class="ti-eye"></i>
+                        </a>
+                        <a href="#">
+                          <i class="ti-heart"></i>
+                        </a>
+                        <a href="#">
+                          <i class="ti-shopping-cart"></i>
+                        </a>
+                      </div>
+                    </div>
+                    <div class="product-btm">
+                      <a href="#" class="d-block">
+                        <h4><%=item.productName%></h4>
+                      </a>
+                      <div class="mt-3">
+                        <span class="mr-4"><%=item.price%></span>
+                        <del><%=item.MRP%></del>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </a>
+                <% }) %>
+
+               
+
+          
+        </div>
+      </div>
+      <div class="pagination p-4">
+        <nav aria-label="Page navigation example">
+          <ul class="pagination">
+            <% for(let i=1; i<=pages;i++){%>
+            <li class="page-item"><span onclick="gotoPage('<%= i-1%>')" class="page-link"><%=i%></span></li>
+            <% } %>
+          </ul>
+        </nav>
+      </div>
+    </form>
+    
+  <script>
+    function gotoPage(page) {
+      var url = new URL(window.location.href);
+      var search_params = url.searchParams;
+      search_params.set('page', page);
+      url.search = search_params.toString();
+      var new_url = url.toString();
+      console.log(new_url);
+      window.location.href = new_url
+    }
+  </script>
+    <!--================End Category Product Area =================-->
+
+    <!--================ start footer Area  =================-->
+ 
+    <!--================ End footer Area  =================-->
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="js/jquery-3.2.1.min.js"></script>
+    <script src="js/popper.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/stellar.js"></script>
+    <script src="vendors/lightbox/simpleLightbox.min.js"></script>
+    <script src="vendors/nice-select/js/jquery.nice-select.min.js"></script>
+    <script src="vendors/isotope/imagesloaded.pkgd.min.js"></script>
+    <script src="vendors/isotope/isotope-min.js"></script>
+    <script src="vendors/owl-carousel/owl.carousel.min.js"></script>
+    <script src="js/jquery.ajaxchimp.min.js"></script>
+    <script src="js/mail-script.js"></script>
+    <script src="vendors/jquery-ui/jquery-ui.js"></script>
+    <script src="vendors/counter-up/jquery.waypoints.min.js"></script>
+    <script src="vendors/counter-up/jquery.counterup.js"></script>
+    <script src="js/theme.js"></script>
+  </body>
+</html>

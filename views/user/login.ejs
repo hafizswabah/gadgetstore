@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/css/login.css">
+  <title>Carter</title>
+</head>
+
+<body>
+  <div id="container" class="container sign-in">
+    <!-- FORM SECTION -->
+    <div class="row">
+      <!-- SIGN UP -->
+      <div class="col align-items-center flex-col sign-up">
+        <div class="form-wrapper align-items-center">
+          <form class="form sign-up" id="signupForm">
+            <div class="input-group">
+              <i class='bx bxs-user'></i>
+              <input type="text" placeholder="Username" id="signupUserName">
+            </div>
+            <div class="input-group">
+              <i class='bx bx-mail-send'></i>
+              <input type="email" placeholder="Email" id="signupEmail">
+            </div>
+            <div class="input-group">
+              <i class='bx bx-mail-send'></i>
+              <input type="number" placeholder="Phone Number" minlength="10" maxlength="10" id="signupPhonenumber" >
+            </div>
+            <div class="input-group">
+              <i class='bx bxs-lock-alt'></i>
+              <input type="password" placeholder="Password" id="signupPassword">
+            </div>
+            <div class="input-group">
+              <i class='bx bxs-lock-alt'></i>
+              <input type="password" placeholder="Confirm password" id="signupConfirmPassword">
+            </div>
+            <div class="input-group">
+              <b class="text-danger" id="signupMessage"></b>
+            </div>
+            <button type="submit">
+              Sign up
+            </button>
+            <p>
+              <span>
+                Already have an account?
+              </span>
+              <b onclick="toggle()" class="pointer">
+                Sign in here
+              </b>
+            </p>
+          </form>
+        </div>
+
+      </div>
+      <!-- END SIGN UP -->
+      <!-- SIGN IN -->
+      <div class="col align-items-center flex-col sign-in">
+        <div class="form-wrapper align-items-center">
+          <!-- login form -->
+
+          <form id="loginForm" class="form sign-in">
+            <div class="input-group">
+              <h2>LOGIN</h2>
+            </div>
+            <div class="input-group">
+              <i class='bx bxs-user'></i>
+              <input type="email" name="email" id="loginEmail" placeholder="Email">
+            </div>
+            <div class="input-group">
+              <i class='bx bxs-lock-alt'></i>
+              <input type="password" name="password" id="loginPassword" placeholder="Password">
+            </div>
+            <div class="input-group">
+              <b style="color: red;"  id="loginMessage"></b>
+            </div>
+            <button type="submit">
+              Sign in
+            </button>
+            <p>
+              <a href="/forget">
+              <b>
+                Forgot password?
+              </b>
+            </a>
+            </p>
+            <p>
+              <span>
+                Don't have an account?
+              </span>
+              <b onclick="toggle()" class="pointer">
+                Sign up here
+              </b>
+            </p>
+          </form>
+
+<!-- end login form -->
+        </div>
+        <div class="form-wrapper">
+
+        </div>
+      </div>
+      <!-- END SIGN IN -->
+    </div>
+    <!-- END FORM SECTION -->
+    <!-- CONTENT SECTION -->
+    <div class="row content-row">
+      <!-- SIGN IN CONTENT -->
+      <div class="col align-items-center flex-col">
+        <div class="text sign-in">
+          <h2>
+            Welcome
+          </h2>
+
+        </div>
+        <div class="img sign-in">
+
+        </div>
+      </div>
+      <!-- END SIGN IN CONTENT -->
+      <!-- SIGN UP CONTENT -->
+      <div class="col align-items-center flex-col">
+        <div class="img sign-up">
+
+        </div>
+        <div class="text sign-up">
+          <h2>
+            Join with us 
+          </h2>
+
+        </div>
+      </div>
+      <!-- END SIGN UP CONTENT -->
+    </div>
+    <!-- END CONTENT SECTION -->
+  </div>
+</body>
+<script src="https://unpkg.com/axios@1.1.2/dist/axios.min.js"></script>
+<script>
+  toggle = () => {
+    container.classList.toggle('sign-in')
+    container.classList.toggle('sign-up')
+  }
+
+
+  let loginForm = document.getElementById('loginForm');
+  let loginMessage = document.getElementById('loginMessage')
+
+  loginForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+  let res = await axios.post('/login', {
+      email: document.getElementById('loginEmail').value,
+      password: document.getElementById('loginPassword').value
+    })
+
+    if (res.data.error) {
+      loginMessage.innerText = res.data.message;
+    } else {
+      window.location.href = '/'
+    }
+  })
+
+
+
+  let signupForm=document.getElementById('signupForm')
+  console.log(signupForm);
+
+  let signupMessage=document.getElementById('signupMessage')
+  console.log(signupMessage);
+
+  signupForm.addEventListener('submit',async (e)=>{
+    e.preventDefault()
+    let res=await axios.post('/signup',{
+name:document.getElementById('signupUserName').value,
+email:document.getElementById('signupEmail').value,
+phoneNumber:document.getElementById('signupPhonenumber').value,
+password:document.getElementById('signupPassword').value,
+confirmPassword:document.getElementById('signupConfirmPassword').value
+    })
+    if(res.data.error)
+    {
+      signupMessage.innerText=res.data.message
+    }
+    else window.location.href='/otp-page'
+  })
+
+  // setTimeout(() => {
+  //   container.classList.add('sign-in')
+  // }, 200)
+</script>
+
+</html>

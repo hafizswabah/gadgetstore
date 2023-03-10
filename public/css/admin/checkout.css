@@ -1,0 +1,52 @@
+.address-choose-head{
+  
+    display: flex ;
+    
+     gap:10px ;
+      margin-left: 20%;
+}
+
+.adress-select-box{
+height: 200px;
+width:600px ; 
+-webkit-box-shadow: 26px 14px 33px -3px rgba(199,199,199,1);
+-moz-box-shadow: 26px 14px 33px -3px rgba(199,199,199,1);
+box-shadow: 26px 14px 33px -3px rgba(199,199,199,1);
+margin-top:50px ;
+justify-content: center;
+display: flex;
+flex-direction: column;
+padding: 32px;
+}
+.payment-form{
+    height: 450px;
+    background-color: white;
+width:600px ; 
+-webkit-box-shadow: 26px 14px 33px -3px rgba(199,199,199,1);
+-moz-box-shadow: 26px 14px 33px -3px rgba(199,199,199,1);
+box-shadow: 26px 14px 33px -3px rgba(199,199,199,1);
+margin-top:50px ;
+align-items: center;
+display: flex;
+flex-direction: column;
+padding: 32px;
+border-radius:10px ;
+}
+
+.payment-methods {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    width: 535px;
+    align-items: center;
+}
+.order-place-button{
+    background-color: black;
+    width: 260px;
+    height: 49px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    border-radius: 10px;
+}

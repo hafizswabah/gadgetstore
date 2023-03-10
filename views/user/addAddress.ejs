@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carter</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/address.css" />
+    <link rel="stylesheet" href="css/bootstrap.css" />
+  <link rel="stylesheet" href="vendors/linericon/style.css" />
+  <link rel="stylesheet" href="css/font-awesome.min.css" />
+  <link rel="stylesheet" href="css/themify-icons.css" />
+  <link rel="stylesheet" href="css/flaticon.css" />
+  <link rel="stylesheet" href="vendors/owl-carousel/owl.carousel.min.css" />
+  <link rel="stylesheet" href="vendors/lightbox/simpleLightbox.css" />
+  <link rel="stylesheet" href="vendors/nice-select/css/nice-select.css" />
+  <link rel="stylesheet" href="vendors/animate-css/animate.css" />
+  <link rel="stylesheet" href="vendors/jquery-ui/jquery-ui.css" />
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
+  <!-- main css -->
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/responsive.css" />
+</head>
+<body>
+    <%-include("../partials/header")%>
+ 
+<div class="ms-5">
+    <h2 style="font-family: auto;">Add Address </h2>
+  
+  </div>
+  
+  <div class="add-main" style="min-height: 100vh;">
+    <div class="container h-100 d-flex justify-content-center align-items-center">
+      <form class=" mt-5 border p-2 address-form"  style="border-radius:10px ; width:75% ; background-color:white; box-shadow: 15px 15px 43px 17px rgba(224,224,224,0.49);"
+       action="/add-address" method="post">
+        <div class="d-flex">
+          <div class="col-6 p-2">
+            <label for="exampleInputEmail1" class="form-label">Name</label>
+            <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="userName">
+          </div>
+  
+  
+  
+          <div class="col-6 p-2">
+            <label for="exampleInputEmail1" class="form-label">Mobile</label>
+            <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="phoneNumber">
+          </div>
+  
+        </div>
+        <div class="d-flex">
+          <div class="col-6 p-2">
+            <label for="exampleInputEmail1" class="form-label">Locality</label>
+            <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="locality">
+          </div>
+          <div class="col-6 p-2">
+            <label for="exampleInputEmail1" class="form-label">pincode</label>
+            <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="pincode">
+          </div>
+        </div>
+        <div class="d-flex">
+  
+          <div class="form-floating col-12 p-2">
+            <textarea name="address" class="form-control" placeholder="address" id="floatingTextarea2" style="height: 100px"></textarea>
+            <label for="floatingTextarea2">Address</label>
+          </div>
+  
+        </div>
+        <div class="d-flex">
+          <div class="col-6 p-2">
+            <label for="exampleInputEmail1" class="form-label">City/Town/District</label>
+            <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="city">
+          </div>
+          <div class="col-6 p-2">
+            <label for="exampleInputEmail1" class="form-label">State</label>
+            <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="state">
+          </div>
+        </div>
+        <button type="submit" class="btn btn-dark w-100 mt-4 mb-3" style="background-color: rgb(8, 8, 83);">Save Address</button>
+      </form>
+    </div>
+  </div>
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+</body>
+</html>

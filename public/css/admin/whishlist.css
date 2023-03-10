@@ -1,0 +1,186 @@
+.whishlists{
+    width:750px ;
+    background-color: rgb(255, 255, 255);
+    height:300px ;
+}
+.whishlistrow{
+    display: flex;
+    gap:30px ;
+    justify-content: center;
+    margin-top:40px ;
+}
+.whishimg img{
+
+    max-height: 297px;
+    padding: 16px;
+}
+.productprice h4{ 
+font-size: 28px;
+font-family: inherit;
+}
+.productprice{
+    display: flex;
+ justify-content: center;
+    flex-direction: column;
+}
+.productexit{
+    font-size: 30px;
+   
+    display: flex;
+    justify-content: flex-end;
+
+}
+.productexit a{
+   text-decoration: none;
+   color: grey;
+
+}
+
+.wish-btn{
+   
+    font-size: 1.5rem;
+    position: absolute;
+    top: 20%;
+    right:10%;
+}
+.add-tocartbtn{
+    background-color: black;
+    color: aliceblue;
+    height: 43px;
+    display: flex;
+    width: 121px;
+    justify-content: center;
+    border-radius: 4px;
+    align-items: center;
+    
+}
+.add-tocartbtn:hover{
+    box-shadow: 0px 0px 6px 5px rgb(195 188 188 / 46%);
+
+}
+.address-form{
+    box-shadow: 11px 47px 32px 16px rgb(195 188 188 / 46%);
+}
+.prfile-adress-sec{
+    height: 700px;
+    width: 700px;
+    background-color: rgb(255 255 255);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow:  48px 47px 32px 16px rgb(195 188 188 / 46%);
+}
+.adress-box{
+    height: 200px;
+     width:600px ; 
+     -webkit-box-shadow: 26px 14px 33px -3px rgba(199,199,199,1);
+     -moz-box-shadow: 26px 14px 33px -3px rgba(199,199,199,1);
+     box-shadow: 26px 14px 33px -3px rgba(199,199,199,1);
+ margin-top:50px ;
+ justify-content: center;
+ display: flex;
+ flex-direction: column;
+ padding: 32px;
+}
+.profile-area{
+    height:700px;width: 700px; 
+    background-color: rgb(255, 255, 255);
+     display: flex; 
+     flex-direction: column; 
+     align-items: center;
+     box-shadow: 11px 47px 32px 16px rgb(195 188 188 / 46%);
+}
+.profile-Icon{
+    height:100px ;
+     width:100px ;
+      border-radius:80px ;
+         background-image:url(/Images/user.png) ;
+          background-size: cover; 
+          margin-top:40px ;
+}
+.add-address-heading{
+    font-size: 22px;
+}
+.profile-form{
+    height: 310px;
+    background-color: white
+}
+.order-history-delivered{
+
+        height: 51px;
+        width: 198px;
+        color: white;
+        background-color: #1add0ccc;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 20px;
+
+}
+.order-history-pending{
+
+        height: 51px;
+        width: 198px;
+        color: white;
+        background-color: #fbff00;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 20px;
+
+}
+.order-history-outForDelivery{
+
+        height: 51px;
+        width: 198px;
+        color: white;
+        background-color: #ffae00;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 20px;
+
+}
+.whishlistempty{
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    
+}
+.whishlist-empty-img img{
+    width: 600px;
+}
+.whishlistempty h2{
+    font-size: 27px;
+    font-family: initial;
+    color: #df1919;
+    font-weight: bolder;
+}
+.user-profile{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.porfile-items{
+    display: flex;
+    align-items: center;
+    width: 382px;
+    height: 41px;
+
+}
+.porfile-items a{
+    text-decoration: none;
+    color: black;
+}
+.profile-items{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 30px;
+}
+.apply-coupon{
+    padding: 100px;
+}
+.Check-total{
+height: 40px;
+}
