@@ -61,8 +61,8 @@ const signup = async (req, res) => {
     port: 465,
     secure: true,
     auth: {
-      user: "swabah.a.avd121@gmail.com",
-      pass: "ihkkvsurxvwlvrnb",
+      user: process.env.email,
+      pass: process.env.password
     },
   });
 
