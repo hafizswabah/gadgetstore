@@ -446,7 +446,7 @@ const addingAddress = async (req, res) => {
   const address = req.body
   address.id = 'id' + (new Date()).getTime();
   await userModel.findByIdAndUpdate({ _id: userId }, { $addToSet: { address: address } })
-  res.redirect('/userProfile')
+  res.redirect('/user-profile')
 
 
 }
