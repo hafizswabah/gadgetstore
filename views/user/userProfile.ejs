@@ -122,13 +122,16 @@
                     <div class="col-sm-3">
                       <p class="mb-0">Address</p>
                     </div>
-                    <div class="col-sm-7">
+                    <div class="col-sm-5">
                       <p class="text-muted mb-0"><%=item.address %></p>
                       <p class="text-muted mb-0"><%=item.pincode %></p>
                       <p class="text-muted mb-0"><%=item.locality%>,<%=item.city%>,<%=item.state%></p>
                     </div>
                     <div class="col-sm-2">
                         <a href="/edit-address/<%=item.id%>" style="text-decoration: none;font-size: 20px;"><i class="ri-edit-line"></i></a></p>
+                    </div>
+                    <div class="col-sm-2">
+                        <a href="/delete-address/<%=item.id%>" style="text-decoration: none;font-size: 20px;"><i class="ri-delete-bin-line"></i></a></p>
                     </div>
                   </div>
                   <% }) %>

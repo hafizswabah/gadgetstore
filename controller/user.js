@@ -439,7 +439,7 @@ const editingAddress = async (req, res) => {
 const deleteaddress = async (req, res) => {
 
   await userModel.findByIdAndUpdate({ _id: req.session.user.id }, { $pull: { address: { id: req.params.id } } })
-  res.redirect('/userProfile')
+  res.redirect('/user-profile')
 }
 const addingAddress = async (req, res) => {
   const userId = req.session.user.id
