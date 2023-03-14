@@ -8,8 +8,8 @@ const { readdirSync } = require('fs')
 const session = require('express-session')
 const orderModel = require('../models/orderManagment')
 const couponModel = require('../models/couponModel')
-const createId=require('../middlewares/createId')
-const axios=require('axios')
+const createId = require('../middlewares/createId')
+const axios = require('axios')
 
 const signupPage = (req, res) => {
   res.render('user/login', { confirm: false, fill: false, message: false })
@@ -241,7 +241,7 @@ const getChangePassword = (req, res) => {
 const getProductPage = async (req, res) => {
   const category = await categoryModel.find().lean()
   const pageNumber = req.query.page ?? 1;
-  let perpage = 1 ;
+  let perpage = 1;
   let documentcount
   const products = await productModel.find().countDocuments()
     .then((documents => {
@@ -255,50 +255,50 @@ const getProductPage = async (req, res) => {
   res.render('user/product', { category, products, currentPage, totalDocuments, pages })
 }
 const categorySort = async (req, res) => {
-  try{
+  try {
 
-  const category = await categoryModel.find().lean()
-  const pageNumber = req.query.page 
-  const name = req.query.name ?? "";
-  const sort = req.query.sort ?? "";
-  const filter = req.query.filter ?? 0;
-  let perpage = 6;
-  let documentcount
-  let products = []
-  if (filter == 0) {
-    products = await productModel
-      .find({
-        productName: new RegExp(name, "i"),
-        category: new RegExp(sort, "i"),
-        unlist: false,
-      })
-      .sort({ price: -1 })
-      .skip(pageNumber * perpage)
-      .limit(perpage)
-      .lean()
-  } else {
-    products = await productModel
-      .find({
-        productName: new RegExp(name, "i"),
-        category: new RegExp(sort, "i"),
-        unlist: false,
-      })
-      .sort({ price: filter })
-      .skip(pageNumber * perpage)
-      .limit(perpage)
-      .lean();
+    const category = await categoryModel.find().lean()
+    const pageNumber = req.query.page
+    const name = req.query.name ?? "";
+    const sort = req.query.sort ?? "";
+    const filter = req.query.filter ?? 0;
+    let perpage = 6;
+    let documentcount
+    let products = []
+    if (filter == 0) {
+      products = await productModel
+        .find({
+          productName: new RegExp(name, "i"),
+          category: new RegExp(sort, "i"),
+          unlist: false,
+        })
+        .sort({ price: -1 })
+        .skip(pageNumber * perpage)
+        .limit(perpage)
+        .lean()
+    } else {
+      products = await productModel
+        .find({
+          productName: new RegExp(name, "i"),
+          category: new RegExp(sort, "i"),
+          unlist: false,
+        })
+        .sort({ price: filter })
+        .skip(pageNumber * perpage)
+        .limit(perpage)
+        .lean();
+    }
+    let currentPage = pageNumber
+    let totalDocuments = documentcount
+    let count = await productModel.find().count();
+    let pages = Math.ceil(count / perpage);
+
+    res.render('user/productList', { category, products, currentPage, totalDocuments, pages, name, filter, sort })
   }
-  let currentPage = pageNumber
-  let totalDocuments = documentcount
-  let count = await productModel.find().count();
-  let pages = Math.ceil(count / perpage);
-
-  res.render('user/productList', { category, products, currentPage, totalDocuments, pages, name, filter, sort })
-}
-catch(err){
-  console.log(err)
-  res.redirect("/")
-}
+  catch (err) {
+    console.log(err)
+    res.redirect("/")
+  }
 }
 
 const productinfo = async (req, res) => {
@@ -368,10 +368,10 @@ const getCart = async (req, res) => {
     cart.map((item) => {
       carts[item.id] = item.quantity;
     })
-  
+
     const productdetail = products.map((item, index) => {
       return { ...item, cartQuantity: carts[item._id] }
-     })
+    })
 
     let totalAmount = 0
     products.forEach((item, index) => {
@@ -468,7 +468,7 @@ const userProfile = async (req, res) => {
 }
 const checkoutpage = async (req, res) => {
   const address = await userModel.findOne({ _id: req.session.user.id }, { address: 1 })
-  const wallet=await userModel.findOne({ _id: req.session.user.id }, { wallet: 1 })
+  const wallet = await userModel.findOne({ _id: req.session.user.id }, { wallet: 1 })
   const _id = req.session.user.id
   const { cart } = await userModel.findOne({ _id }, { cart: 1 })
   const cartItems = cart.map((item) => {
@@ -491,7 +491,7 @@ const checkoutpage = async (req, res) => {
     totalAmount = totalAmount + (item.price * cart[index].quantity)
   })
 
-  res.render('user/checkout', { address, totalAmount,wallet })
+  res.render('user/checkout', { address, totalAmount, wallet })
 }
 const quantityup = async (req, res) => {
   await userModel.updateOne({ _id: req.session.user.id, cart: { $elemMatch: { id: req.params.id } } }, {
@@ -560,140 +560,202 @@ const applycoupon = async (req, res) => {
     res.json({ error: false, discountAmount })
   }
 }
-const applyWallet=async(req,res)=>{
+const applyWallet = async (req, res) => {
+  console.log(req.user)
   console.log(req.body);
-  
-  if(parseInt(req.body.wallet)> parseInt(req.body.orginalAmount)){
-    let result=parseInt(req.body.wallet) -parseInt(req.body.orginalAmount) ;
-    let total=0;
-    let wallet=result; 
-    await userModel.updateOne({_id:req.session.user.id},{$inc:{"wallet":-wallet}}).then(result=>{
-      console.log(result);
-    })
-    res.json({error:false,wallet,total})
-  }else{
-    let result= parseInt(req.body.orginalAmount)-parseInt(req.body.wallet) ;
-    let wallet=0;
-    await userModel.updateOne({_id:req.session.user.id},{$set:{"wallet":0}}).then(result=>{
-      console.log(result);
-    })
-    let total=result;
-    res.json({error:false,wallet,total})
+  const {wallet:userWallet} =await userModel.findOne({_id:req.session.user.id}, {wallet:1});
+
+  if (userWallet > parseInt(req.body.orginalAmount)) {
+    let result = userWallet - parseInt(req.body.orginalAmount);
+    let total = 0;
+    let balanceWallet=result;
+    let wallet = parseInt(req.body.orginalAmount);
+    req.session.walletApplied = {
+      wallet
+    }
+    res.json({ error: false, wallet:balanceWallet, total })
+  } else {
+    let result = parseInt(req.body.orginalAmount) - userWallet;
+    let balanceWallet=0
+    let wallet = userWallet;
+    
+    req.session.walletApplied = {
+      wallet
+    }
+
+    let total = result;
+    res.json({ error: false, wallet:balanceWallet, total })
   }
-  
-//   const wallet = await userModel.find({_id:req.session.user.id},{wallet:1}).lean()
-//   console.log(wallet);
 
-// const { cart } = await userModel.findOne({ _id: req.session.user.id }, { cart: 1 })
+  //   const wallet = await userModel.find({_id:req.session.user.id},{wallet:1}).lean()
+  //   console.log(wallet);
 
-//  const cartItems = cart.map(item => {
-//     return item.id
-//   })
+  // const { cart } = await userModel.findOne({ _id: req.session.user.id }, { cart: 1 })
 
-//   let products = await productModel.find({ _id: { $in: cartItems } }).lean()
-//   for(let index in products){
-//     products[index].amountPayable=products[index].amountPayable-(products.length/wallet)
-//   }
-  
+  //  const cartItems = cart.map(item => {
+  //     return item.id
+  //   })
+
+  //   let products = await productModel.find({ _id: { $in: cartItems } }).lean()
+  //   for(let index in products){
+  //     products[index].amountPayable=products[index].amountPayable-(products.length/wallet)
+  //   }
+
 }
 
 
 const orderplacement = async (req, res) => {
-  try{
- 
-  if (req.body.payment == 'cod') {
-    let discountAmount = 0
-    const coupon = await couponModel.findOne({ code: req.body.coupon })
-    const { cart } = await userModel.findOne({ _id: req.session.user.id }, { cart: 1 })
+  try {
 
-    const cartItems = cart.map(item => {
-      return item.id
-    })
+    if (req.body.payment == 'cod') {
+      let discountAmount = 0
+      const coupon = await couponModel.findOne({ code: req.body.coupon })
+      const { cart } = await userModel.findOne({ _id: req.session.user.id }, { cart: 1 })
 
-    let products = await productModel.find({ _id: { $in: cartItems } }).lean()
+      const cartItems = cart.map(item => {
+        return item.id
+      })
 
-    if (coupon) {
+      let products = await productModel.find({ _id: { $in: cartItems } }).lean()
 
-      for (let index in products) {
-        products[index].amountPayable = products[index].price;
-        if (products[index].price > coupon.minAmount) {
-          discountAmount = Math.floor(products[index].price * coupon.discount / 100)
-          if (discountAmount > coupon.maxDiscountAmount) {
-            discountAmount = coupon.maxDiscountAmount;
+      if (coupon) {
+
+        for (let index in products) {
+          products[index].amountPayable = products[index].price;
+          if (products[index].price > coupon.minAmount) {
+            discountAmount = Math.floor(products[index].price * coupon.discount / 100)
+            if (discountAmount > coupon.maxDiscountAmount) {
+              discountAmount = coupon.maxDiscountAmount;
+            }
+            products[index].amountPayable = products[index].price - discountAmount;
           }
-          products[index].amountPayable = products[index].price - discountAmount;
         }
       }
-    }
-    const { address } = await userModel.findOne({ _id: req.session.user.id }, { address: { $elemMatch: { id: req.body.address } } })
-    let orders = []
-    let i = 0
-    console.log(discountAmount)
-    for (let item of products) {
-      orders.push({
-        address: address[0],
-        product: item,
-        userId: req.session.user.id,
-        quantity: cart[i].quantity,
-        total: cart[i].quantity * item.price,
-        amountPayable: cart[i].quantity * item.price - (discountAmount / products.length)
-      })
-      i++
-    }
-
-    const order = await orderModel.create(orders)
-    await userModel.findByIdAndUpdate({ _id: req.session.user.id }, { $set: { cart: [] } })
-    res.redirect('/orderplace')
-  } else {
-
-    let discountAmount = 0
-    const coupon = await couponModel.findOne({ code: req.body.coupon })
-    const { cart } = await userModel.findOne({ _id: req.session.user.id }, { cart: 1 })
-
-    const cartItems = cart.map(item => {
-      return item.id
-    })
-
-    let products = await productModel.find({ _id: { $in: cartItems } }).lean()
-    let totalamountpayble = 0;
-    if (coupon) {
-req.session.couponcode={code:coupon.code}
-      for (let index in products) {
-        products[index].amountPayable = products[index].price;
-        if (products[index].price > coupon.minAmount) {
-          discountAmount = Math.floor(products[index].price * coupon.discount / 100)
-          if (discountAmount > coupon.maxDiscountAmount) {
-            discountAmount = coupon.maxDiscountAmount;
-          }
-          products[index].amountPayable = products[index].price - discountAmount;
-        }
+      let wallet = 0;
+      if (req.session.walletApplied) {
+        wallet = req.session.walletApplied.wallet
+      }
+      let distributedWallet = wallet / products.length;
+      const { address } = await userModel.findOne({ _id: req.session.user.id }, { address: { $elemMatch: { id: req.body.address } } })
+      let orders = []
+      let i = 0
+      console.log(discountAmount)
+      for (let item of products) {
+        orders.push({
+          address: address[0],
+          product: item,
+          userId: req.session.user.id,
+          quantity: cart[i].quantity,
+          total: cart[i].quantity * item.price,
+          amountPayable: cart[i].quantity * item.price - (discountAmount / products.length) - distributedWallet
+        })
+        i++
       }
 
-      products.forEach(item => {
-        totalamountpayble = totalamountpayble + item.amountPayable
+      const order = await orderModel.create(orders)
+      await userModel.findByIdAndUpdate({ _id: req.session.user.id }, { $set: { cart: [] } })
+      await userModel.updateOne({_id:req.session.user.id},{$inc:{wallet: -wallet}}).then(result=>{
+        console.log(result);
+      })
+      req.session.walletApplied = null
+      res.redirect('/orderplace')
+    } else {
+
+      let discountAmount = 0
+      const coupon = await couponModel.findOne({ code: req.body.coupon })
+      const { cart } = await userModel.findOne({ _id: req.session.user.id }, { cart: 1 })
+
+      const cartItems = cart.map(item => {
+        return item.id
       })
 
+      let products = await productModel.find({ _id: { $in: cartItems } }).lean()
+      let totalamountpayble = 0;
+      if (coupon) {
+        req.session.couponcode = { code: coupon.code }
+        for (let index in products) {
+          products[index].amountPayable = products[index].price;
+          if (products[index].price > coupon.minAmount) {
+            discountAmount = Math.floor(products[index].price * coupon.discount / 100)
+            if (discountAmount > coupon.maxDiscountAmount) {
+              discountAmount = coupon.maxDiscountAmount;
+            }
+            products[index].amountPayable = products[index].price - discountAmount;
+          }
+        }
+
+        products.forEach(item => {
+          totalamountpayble = totalamountpayble + item.amountPayable
+        })
+
+      }
+      else {
+        products.forEach((item, index) => {
+          totalamountpayble = totalamountpayble + (item.price * cart[index].quantity)
+
+        })
+
+
+      }
+      const user = await userModel.findOne({ _id: req.session.user.id })
+      req.session.userDetails = user
+      console.log(req.session.userDetails);
+      const { address } = await userModel.findOne({ _id: req.session.user.id }, { address: { $elemMatch: { id: req.body.address } } })
+      req.session.userAddress = { id: address[0].id }
+
+
+      // cashfree
+      let orderId = "order_" + createId();
+      const options = {
+        method: "POST",
+        url: "https://sandbox.cashfree.com/pg/orders",
+        headers: {
+          accept: "application/json",
+          "x-api-version": "2022-09-01",
+          "x-client-id": '336657a76ae0c6ecd5bf471e36756633',
+          "x-client-secret": '342903f011f9389cc33de39c502a89715d97a5a8',
+          "content-type": "application/json",
+        },
+        data: {
+          order_id: orderId,
+          order_amount: totalamountpayble,
+          order_currency: "INR",
+          customer_details: {
+            customer_id: req.session.user.id,
+            customer_email: req.session.user.email,
+            customer_phone: req.session.userDetails.phoneNumber,
+          },
+
+          order_meta: {
+            return_url: "https://gadgets.swabah.online/return?order_id={order_id}"
+          },
+        },
+      };
+
+      await axios
+        .request(options)
+        .then(function (response) {
+
+          return res.render("user/paymenttemp", {
+            orderId,
+            sessionId: response.data.payment_session_id,
+          });
+        })
+        .catch(function (error) {
+          console.error(error);
+        });
     }
-    else {
-      products.forEach((item, index) => {
-        totalamountpayble = totalamountpayble + (item.price * cart[index].quantity)
-
-      })
-
-
-    }
-const user=await userModel.findOne({_id:req.session.user.id})
-req.session.userDetails=user
-console.log(req.session.userDetails);
-    const { address } = await userModel.findOne({ _id: req.session.user.id }, { address: { $elemMatch: { id: req.body.address } } })
-    req.session.userAddress={id:address[0].id}
-
-
-    // cashfree
-    let orderId = "order_" + createId();
+  } catch (err) {
+    req.session.walletApplied = null
+    console.log(err);
+  }
+}
+const paymenturl = async (req, res) => {
+  try {
+    const order_id = req.query.order_id;
     const options = {
-      method: "POST",
-      url: "https://sandbox.cashfree.com/pg/orders",
+      method: "GET",
+      url: "https://sandbox.cashfree.com/pg/orders/" + order_id,
       headers: {
         accept: "application/json",
         "x-api-version": "2022-09-01",
@@ -701,58 +763,12 @@ console.log(req.session.userDetails);
         "x-client-secret": '342903f011f9389cc33de39c502a89715d97a5a8',
         "content-type": "application/json",
       },
-      data: {
-        order_id: orderId,
-        order_amount: totalamountpayble,
-        order_currency: "INR",
-        customer_details: {
-          customer_id: req.session.user.id,
-          customer_email: req.session.user.email,
-          customer_phone: req.session.userDetails.phoneNumber,
-        },
-
-        order_meta: {
-          return_url: "https://gadgets.swabah.online/return?order_id={order_id}"
-        },
-      },
-    };
-
-    await axios
-      .request(options)
-      .then(function (response) {
-
-        return res.render("user/paymenttemp", {
-          orderId,
-          sessionId: response.data.payment_session_id,
-        });
-      })
-      .catch(function (error) {
-        console.error(error);
-      });
-  }
-} catch(err){
-  console.log(err);
-}
-}
-const paymenturl=async(req,res)=>{
-  try {
-    const order_id = req.query.order_id;
-    const options = {
-        method: "GET",
-        url: "https://sandbox.cashfree.com/pg/orders/" + order_id,
-        headers: {
-            accept: "application/json",
-            "x-api-version": "2022-09-01",
-            "x-client-id": '336657a76ae0c6ecd5bf471e36756633',
-            "x-client-secret": '342903f011f9389cc33de39c502a89715d97a5a8',
-            "content-type": "application/json",
-        },
     };
 
     const response = await axios.request(options);
 
     const { cart } = await userModel.findOne({ _id: req.session.user.id }, { cart: 1 })
-  
+
     const cartItems = cart.map(item => {
       return item.id
     })
@@ -760,56 +776,69 @@ const paymenturl=async(req,res)=>{
     let products = await productModel.find({ _id: { $in: cartItems } }).lean()
     if (response.data.order_status == "PAID") {
       let discountAmount = 0
-      if(req.session.couponcode){
-      const coupon = await couponModel.findOne({ code: req.session.couponcode.code })
-      for (let index in products) {
-        products[index].amountPayable = products[index].price;
-        if (products[index].price > coupon.minAmount) {
-          discountAmount = Math.floor(products[index].price * coupon.discount / 100)
-          if (discountAmount > coupon.maxDiscountAmount) {
-            discountAmount = coupon.maxDiscountAmount;
+      if (req.session.couponcode) {
+        const coupon = await couponModel.findOne({ code: req.session.couponcode.code })
+        for (let index in products) {
+          products[index].amountPayable = products[index].price;
+          if (products[index].price > coupon.minAmount) {
+            discountAmount = Math.floor(products[index].price * coupon.discount / 100)
+            if (discountAmount > coupon.maxDiscountAmount) {
+              discountAmount = coupon.maxDiscountAmount;
+            }
+            products[index].amountPayable = products[index].price - discountAmount;
           }
-          products[index].amountPayable = products[index].price - discountAmount;
         }
       }
-      }
-     
-  
+
+
       const { address } = await userModel.findOne({ _id: req.session.user.id }, { address: { $elemMatch: { id: req.session.userAddress.id } } })
       let orders = []
       let i = 0
+
+      let wallet = 0;
+      if (req.session.walletApplied) {
+        wallet = req.session.walletApplied.wallet
+      }
+      let distributedWallet = wallet / products.length;
+
+
       console.log(discountAmount)
       for (let item of products) {
         orders.push({
           address: address[0],
-          paid:true,
-          paymentType:'online',
+          paid: true,
+          paymentType: 'online',
           product: item,
           userId: req.session.user.id,
           quantity: cart[i].quantity,
           total: cart[i].quantity * item.price,
-          amountPayable: cart[i].quantity * item.price - (discountAmount / products.length)
+          amountPayable: cart[i].quantity * item.price - (discountAmount / products.length) - distributedWallet
         })
         i++
       }
-  
+
       const order = await orderModel.create(orders)
       await userModel.findByIdAndUpdate({ _id: req.session.user.id }, { $set: { cart: [] } })
+      await userModel.updateOne({_id:req.session.user.id},{$inc:{wallet: -wallet}}).then(result=>{
+        console.log(result);
+      })
+      req.session.walletApplied = null
       res.render('user/orderplace')
     }
   }
-  catch(err){
-    console.log('payment',err);
+  catch (err) {
+    req.session.walletApplied = null
+    console.log('payment', err);
   }
 
 
 }
 
-const cancelOrder=async(req, res)=> {
+const cancelOrder = async (req, res) => {
   const _id = req.params._id;
   const order = await orderModel.findOne({ _id });
   console.log(order);
-  let walletInc=order.amountPayable;
+  let walletInc = order.amountPayable;
   if (order.paid) {
     await userModel.updateOne(
       { _id: req.session.user.id },
@@ -827,41 +856,40 @@ const cancelOrder=async(req, res)=> {
   res.redirect("/order-history");
 }
 
-const returnProduct=async(req,res)=>{
-  const _id=req.params._id
-  const order=await orderModel.findOne({_id})
-  if (order.orderStatus="delivered") {
-    let walletInc=order.amountPayable;
+const returnProduct = async (req, res) => {
+  const _id = req.params._id
+  const order = await orderModel.findOne({ _id })
+  if (order.orderStatus = "delivered") {
+    let walletInc = order.amountPayable;
     await userModel.updateOne(
       { _id: req.session.user.id },
       { $inc: { wallet: walletInc } }
     );
   }
-  await orderModel.updateOne({_id},
-    {$set:{orderStatus:'Return Proccessing' }})
-    res.redirect('/order-history')
+  await orderModel.updateOne({ _id },
+    { $set: { orderStatus: 'Return Proccessing' } })
+  res.redirect('/order-history')
 }
-const orderedProduct=async(req,res)=>{
-  try{
-  const _id=req.params._id
-  const order= await orderModel.findOne({_id})
- return res.render('user/product-order',{order})
-}catch(err)
-{
-  console.log(err);
-}
+const orderedProduct = async (req, res) => {
+  try {
+    const _id = req.params._id
+    const order = await orderModel.findOne({ _id })
+    return res.render('user/product-order', { order })
+  } catch (err) {
+    console.log(err);
+  }
 }
 
-const coupons=async(req,res)=>{
-  const coupons=await couponModel.find().lean()
+const coupons = async (req, res) => {
+  const coupons = await couponModel.find().lean()
   console.log(coupons);
-  res.render('user/Coupons',{coupons})
+  res.render('user/Coupons', { coupons })
 }
 module.exports = {
   signupPage, getProductPage, getChangePassword, categorySort, otpforgot,
   otp, otpPage, homePage, loginPage, login, signup, userProfile, userLogout, fogetPassword, forgototpVerification,
   forget, otpVerificationPage, ResetPassword, productinfo, addtocart, getCart, getwhishlist, addtowhishlist,
   removefromwhishlist, getcheckout, addaddress, editaddress, addingAddress, editingAddress, deleteaddress, checkoutpage,
-  quantityup, quantitydown, removefromcart, orderplacement, orderplace, orderHistory, applycoupon,paymenturl,
-  cancelOrder,returnProduct,orderedProduct,coupons,applyWallet
+  quantityup, quantitydown, removefromcart, orderplacement, orderplace, orderHistory, applycoupon, paymenturl,
+  cancelOrder, returnProduct, orderedProduct, coupons, applyWallet
 }

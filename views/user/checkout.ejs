@@ -91,9 +91,11 @@
                     <h5>Wallet</h5>
                   </td>
                   <td>
-                    <div class="cupon_text">
+                    <div class="cupon_text d-flex">
                       <input readonly type="number" value="<%=wallet.wallet%>" name="wallet" id="wallet" />
-                      <span class="main_btn" onclick="applywallet()">Apply </span>
+                      <div id="applyBtn">
+                        <span class="main_btn" onclick="applywallet()">Apply </span>
+                      </div>
                     </div>
                     <div id="couponMessage">
 
@@ -195,6 +197,7 @@
         }).then((resp)=>{
           document.getElementById('totalAmount').innerHTML=resp.data.total;
           document.getElementById('wallet').value=resp.data.wallet;
+          document.getElementById('applyBtn').innerHTML=""
         })
         
       }
