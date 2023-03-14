@@ -50,9 +50,9 @@
               <img src="/img/next-icon.png" class="icon-left" alt="" id="prev-img">
               <div class="small-container">
                 <div id="small-img-roll">
-                  <img src="<%= product.mainImage.url%>" class="show-small-img" alt="">
+                  <img src="<%= product.mainImage.url%>" class="show-small-img" alt=""  style="object-fit: contain;">
                   <% product.subImages.map(item=>{ %>
-                  <img src="<%= item.url %>" class="show-small-img" alt="">
+                  <img src="<%= item.url %>" class="show-small-img" alt=""  style="object-fit: contain;">
                   <% }) %>
 
                 </div>
