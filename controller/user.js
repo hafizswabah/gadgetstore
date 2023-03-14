@@ -704,9 +704,7 @@ console.log(req.session.userDetails);
         },
 
         order_meta: {
-          return_url: "http://localhost:8888/return?order_id={order_id}",
-
-          // return_url: "https://aeshion.shop/return?order_id={order_id}",
+          return_url: "https://gadgets.swabah.online/return?order_id={order_id}"
         },
       },
     };
