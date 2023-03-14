@@ -561,8 +561,7 @@ ul {
   color: #091036;
 }
 .offer_area {
-  background: url(../img/offer-bg.png) no-repeat center;
-  background-size: cover;
+
 }
 @media (max-width: 991px) {
   .offer_area {
