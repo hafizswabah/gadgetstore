@@ -54,7 +54,7 @@
        
         <div class="col-lg-2 col-md-6">
           <div class="single-feature">
-            <a href="/shop?sort=earphone" class="title">
+            <a href="/shop?sort=headphone" class="title">
               <img src="https://static.toiimg.com/thumb/msid-81267766,imgsize-162251,width-400,resizemode-4/81267766.jpg" alt="" class="categoryIcons">
               <h3>Earphones</h3>
             </a>
@@ -81,7 +81,7 @@
         </div>
         <div class="col-lg-2 col-md-6">
           <div class="single-feature">
-            <a href="/shop?sort=tablet" class="title">
+            <a href="/shop?sort=tab" class="title">
               <img src="https://www.washingtonpost.com/resizer/fg1mribUWgzAxcJY70JaLo65hZI=/arc-anglerfish-washpost-prod-washpost/public/GAUG7LYJPRELXM5UYB4K626KQI.jpg" alt="" class="categoryIcons">
               <h3>Tablets</h3>
             </a>
@@ -89,7 +89,7 @@
         </div>
         <div class="col-lg-2 col-md-6">
           <div class="single-feature">
-            <a href="/shop?sort=i+watch" class="title">
+            <a href="/shop?sort=smartwatch" class="title">
               <img src="https://images.cnbctv18.com/wp-content/uploads/2019/09/2019-09-10T175338Z_1_LYNXNPEF891T6_RTROPTP_4_APPLE-IPHONE-1-768x512.jpg" alt="" class="categoryIcons">
               <h3>Smart Watches</h3>
             </a>
@@ -119,7 +119,7 @@
       <div class="carousel-inner">
         <% offer.forEach((item=>{ %>
           <a href="<%=item.url  %> " class="carousel-item active">
-            <img src="/products/<%=item.image %>" class="d-block w-100" alt="...">
+            <img src="<%=item.image.url%>" class="d-block w-100" alt="...">
             <div class="carousel-caption d-none d-md-block">
            
             </div>
@@ -149,7 +149,7 @@
         <div class="col-lg-3 col-md-6">
           <div class="single-product">
             <div class="product-img">
-              <img class="img-fluid w-100" src="/products/<%= item.mainImage%>" alt="" />
+              <img class="img-fluid w-100" src="<%= item.mainImage.url%>" alt="" />
               <div class="p_icon">
                 <a href="#">
                   <i class="ti-eye"></i>

@@ -40,8 +40,8 @@
         <div class="col-lg-6">
           <div class="s_product_img">
 
-            <div class="show" href="/products/<%=product.mainImage %>">
-              <img src="/products/<%= product.mainImage %>" id="show-img">
+            <div class="show" href="<%=product.mainImage.url%>">
+              <img src="<%= product.mainImage.url%>" id="show-img">
             </div>
 
             <!-- Secondary carousel image thumbnail gallery -->
@@ -50,9 +50,9 @@
               <img src="/img/next-icon.png" class="icon-left" alt="" id="prev-img">
               <div class="small-container">
                 <div id="small-img-roll">
-                  <img src="/products/<%= product.mainImage %>" class="show-small-img" alt="">
+                  <img src="<%= product.mainImage.url%>" class="show-small-img" alt="">
                   <% product.subImages.map(item=>{ %>
-                  <img src="/products/<%= item.filename %>" class="show-small-img" alt="">
+                  <img src="<%= item.url %>" class="show-small-img" alt="">
                   <% }) %>
 
                 </div>
