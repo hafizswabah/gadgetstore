@@ -255,12 +255,14 @@ const getProductPage = async (req, res) => {
   res.render('user/product', { category, products, currentPage, totalDocuments, pages })
 }
 const categorySort = async (req, res) => {
+  try{
+
   const category = await categoryModel.find().lean()
   const pageNumber = req.query.page 
   const name = req.query.name ?? "";
   const sort = req.query.sort ?? "";
   const filter = req.query.filter ?? 0;
-  let perpage = 1;
+  let perpage = 6;
   let documentcount
   let products = []
   if (filter == 0) {
@@ -271,8 +273,8 @@ const categorySort = async (req, res) => {
         unlist: false,
       })
       .sort({ price: -1 })
-      .skip(pageNumber * 2)
-      .limit(2)
+      .skip(pageNumber * perpage)
+      .limit(perpage)
       .lean()
   } else {
     products = await productModel
@@ -282,16 +284,21 @@ const categorySort = async (req, res) => {
         unlist: false,
       })
       .sort({ price: filter })
-      .skip(pageNumber * 2)
-      .limit(2)
+      .skip(pageNumber * perpage)
+      .limit(perpage)
       .lean();
   }
   let currentPage = pageNumber
   let totalDocuments = documentcount
   let count = await productModel.find().count();
-  let pages = Math.ceil(count / 2);
+  let pages = Math.ceil(count / perpage);
 
   res.render('user/productList', { category, products, currentPage, totalDocuments, pages, name, filter, sort })
+}
+catch(err){
+  console.log(err)
+  res.redirect("/")
+}
 }
 
 const productinfo = async (req, res) => {
