@@ -33,7 +33,7 @@
 
 <div class="add-main" style="min-height: 100vh;">
   <div class="container h-100 d-flex justify-content-center align-items-center">
-    <form class=" mt-5 border p-5 " enctype="multipart/form-data" style="border-radius:10px ; width:75% ; background-color:rgb(215, 215, 215) ;" action="/admin/addProduct" method="post">
+    <form class=" mt-5 border p-5 " enctype="multipart/form-data" style="border-radius:10px ; width:65% ; background-color:white ;" action="/admin/addProduct" method="post">
       <div class="d-flex">
         <div class="col-6 p-2">
           <label for="exampleInputEmail1" class="form-label">Product Name</label>
@@ -41,13 +41,13 @@
         </div>
         <div class="col-6 p-2">
           <label for="exampleInputEmail1" class="form-label">Category</label>
-          <div>
-            <select name="category" id="" style="height:40px ;width: 415px; border-radius:5px ; background-color: white;">
+        
+            <select name="category" id="" class="form-control">
               <% category.forEach((item)=>{ %>
               <option value="<%= item.category%>"><%=item.category%></option>
               <% })  %>
             </select>
-          </div>
+          
         </div>
       </div>
 

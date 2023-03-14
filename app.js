@@ -20,7 +20,6 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(express.static(path.join(__dirname, "/public")))
 mongodb()
-
 app.use(session({
     secret: 'key',
     resave: false,

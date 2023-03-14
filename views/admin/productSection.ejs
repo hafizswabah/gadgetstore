@@ -47,9 +47,8 @@
               <i class="ri-search-2-line" style="font-size:25px ;"></i>
             </div>
           </form>
+          <a href="/admin/add" class="addproduct btn btn-dark text-white " style="height: 40px; width: 150px; ">Add Product </a>
         </div>
-       <a href="/admin/add" class="addproduct btn btn-dark text-white " style="height: 40px; width: 150px; ; margin-left: 800px;
-        margin-top:70px ;">Add Product </a>
       </div>
         <table class="table table-striped">
           <tbody>
@@ -69,7 +68,7 @@
             <% products.forEach((item, index)=>{%> 
             <tr>
               <th><%= index+1 %> </th>
-              <th><img src="/products/<%= item.mainImage%>" style="max-height:100px;max-width:90px ;" alt=""></th>
+              <th><img src="<%=item.mainImage.url%>" style="max-height:100px;max-width:90px ;" alt=""></th>
               <th><%= item.productName %> </th>
               <th><%= item.brand %> </th>
               <th><%= item.category %> </th>

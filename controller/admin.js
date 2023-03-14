@@ -7,7 +7,7 @@ const { render } = require('ejs')
 const orderModel = require('../models/orderManagment')
 const couponModel = require('../models/couponModel')
 const moment=require('moment')
-
+const cloudinary= require("../config/cloudinary")
 
 const adminLogin = (req, res) => {
     res.render('admin/adminLogin')
@@ -50,7 +50,7 @@ const Login = async (req, res) =>{
 const adminUser = async (req, res) => {
     const userData = await userModel.find({ staff: true }).lean()
 
-    res.render('admin/staffManagment', { userData })
+    res.render('admin/staffManagment', { userData,admin:req.session.admin.admin })
 }
 const adminProduct = async (req, res) => {
     var products = await productModel.find().lean();
@@ -60,7 +60,7 @@ const adminProduct = async (req, res) => {
 const userSearch = async (req, res) => {
     const userName = req.body.name
     const userData = await userModel.find({ name: new RegExp(userName) }).lean()
-    res.render('admin/userSection', { userData })
+    res.render('admin/userSection', { userData,admin:req.session.admin.admin })
 }
 
 const unlistUser = (req, res) => {
@@ -84,7 +84,7 @@ const restrictUser = async (req, res) => {
 }
 const ban = async (req, res) => {
     const users = await userModel.find({ staff:false }).lean()
-    res.render('admin/userManagment', { users })
+    res.render('admin/userManagment', { users,admin:req.session.admin.admin })
 }
 const unban = async (req, res) => {
     const _id = req.params.id
@@ -95,17 +95,28 @@ const unban = async (req, res) => {
 const productPage = async (req, res) => {
     const category = await categoryModel.find().lean()
 
-    res.render('admin/addProduct', { category })
+    res.render('admin/addProduct', { category, admin:req.session.admin.admin })
 }
 
 
 const addProduct = async (req, res) => {
-    console.log(req.body);
-
+  
+    try{
+        
+    let mainImage=await cloudinary.uploader.upload(req.files.mainImage[0].path,{
+        folder:'sample'
+    })
+    let subImages=[]
+    for(let item of req.files.subImage){
+        let result=await cloudinary.uploader.upload(item.path,{
+            folder:'sample'
+        })
+        subImages.push(result)
+    }
     const productDetail =await productModel.create({
         productName: req.body.productName,
-        mainImage: req.files.mainImage[0].filename,
-        subImages: req.files.subImage,
+        mainImage,
+        subImages,
         category: req.body.category,
         price: req.body.price,
         MRP: req.body.MRP,
@@ -113,8 +124,12 @@ const addProduct = async (req, res) => {
         description: req.body.description,
         brand: req.body.brand
     })
-
     return res.redirect('/admin/product')
+
+}catch(err){
+    console.log(err)
+}
+
 }
 
 
@@ -137,17 +152,27 @@ const listProduct = async (req, res) => {
 const productEditPage = async (req, res) => {
     const product = await productModel.findOne({ _id: req.params.id })
     const category = await categoryModel.find().lean()
-    res.render("admin/editProduct", { _id: req.params.id, product, category })
+    res.render("admin/editProduct", { _id: req.params.id, product, category,admin:req.session.admin.admin })
 }
 
 
 const editProduct = async (req, res) => {
+    let mainImage=await cloudinary.uploader.upload(req.files.mainImage[0].path,{
+        folder:'sample'
+    })
+    let subImages=[]
+    for(let item of req.files.subImage){
+        let result=await cloudinary.uploader.upload(item.path,{
+            folder:'sample'
+        })
+        subImages.push(result)
+    }
     if (req.files.mainImage && req.files.subImage) {
         await productModel.updateOne({ _id: req.body._id }, {
             $set: {
                 productName: req.body.productName,
-                mainImage: req.files.mainImage[0].filename,
-                subImage: req.files.filename,
+                mainImage,
+                subImages,
                 category: req.body.category,
                 price: req.body.price,
                 MRP: req.body.MRP,
@@ -183,18 +208,19 @@ const category = async (req, res) => {
 const addCategoryPage = (req, res) => {
 
 
-    res.render('admin/addCategory', { message: false })
+    res.render('admin/addCategory', { message: false,admin:req.session.admin.admin })
 }
 const addCategory = async (req, res) => {
 
-    const categoryExist = await categoryModel.findOne({ category: req.body.category })
+    const categoryExist = await categoryModel.findOne({ category: { $regex: new RegExp(req.body.category, "i") } });
 
     if (categoryExist) {
-        const message = 'Category already Exist'
-        return res.render("admin/addCategory", { message })
+        const message = 'Category already exists';
+        return res.render("admin/addCategory", { message, admin: req.session.admin.admin });
     }
-    const category =await categoryModel.create({ category: req.body.category })
-
+    
+    const category = await categoryModel.create({ category: req.body.category });
+    
     
 
             res.redirect('/admin/category')
@@ -221,15 +247,24 @@ const getofferpage = async (req, res) => {
     res.render('admin/offerpage', { banners,admin:req.session.admin.admin})
 }
 const addofferpage = (req, res) => {
-    res.render('admin/addofferpage')
+    res.render('admin/addofferpage',{admin:req.session.admin.admin})
 }
 const offer =async (req, res) => {
+    try{
+
+    let image=await cloudinary.uploader.upload(req.file.path,{
+        folder:'sample'
+    })
     const offerdetails =await bannerModel.create({
         banner: req.body.banner,
         url: req.body.url,
-        image: req.file.filename
+        image
 
     })
+    res.redirect('offers')
+}catch(err){
+    console.log(err)
+}
 }
 const deletebanner = async (req, res) => {
     await bannerModel.deleteOne({ _id: req.params.id })
@@ -238,11 +273,14 @@ const deletebanner = async (req, res) => {
 const editbanner = async (req, res) => {
 
     if (req?.file?.filename) {
+        let image=await cloudinary.uploader.upload(req.file.path,{
+            folder:'sample'
+        })
         await bannerModel.updateOne({ _id: req.body.id }, {
             $set: {
                 banner: req.body.banner,
                 url: req.body.url,
-                image: req.file.filename
+                image
 
             }
         })
@@ -269,7 +307,7 @@ const getcoupenpage = async (req, res) => {
     res.render('admin/coupen', { coupons,admin:req.session.admin.admin })
 }
 const getaddcoupen = (req, res) => {
-    res.render('admin/addCoupons')
+    res.render('admin/addCoupons',{admin:req.session.admin.admin})
 }
 const postaddcoupon = async (req, res) => {
     const coupondetails =await couponModel.create({
