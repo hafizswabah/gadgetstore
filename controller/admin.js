@@ -296,7 +296,7 @@ const editbanner = async (req, res) => {
 }
 const editbannerpage = async (req, res) => {
     const banner = await bannerModel.findOne({ _id: req.params.id })
-    res.render('admin/editBannerPage', { banner })
+    res.render('admin/editBannerPage', { banner,admin:req.session.admin.admin })
 }
 const getorderpage = async (req, res) => {
     const orders = await orderModel.find().lean()
@@ -333,7 +333,7 @@ const unlistcoupon = async (req, res) => {
 const geteditcoupon = async (req, res) => {
     const coupon = await couponModel.findOne({ _id: req.params.id })
 
-    res.render('admin/editcoupon', { coupon })
+    res.render('admin/editcoupon', { coupon,admin:req.session.admin.admin })
 }
 const editcoupon = async (req, res) => {
     await couponModel.findByIdAndUpdate(req.body.id, {
