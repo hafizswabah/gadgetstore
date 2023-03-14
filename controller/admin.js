@@ -468,16 +468,6 @@ const getsalesReport=async(req,res)=>{
       
   let categories= await orderModel.aggregate([{$match:{createdAt: { $gt: startDate, $lt: endDate }}},{$group:{_id:"$product.category", count:{$sum:1}, price:{$sum:"$product.price"}}}])
   let byBrand= await orderModel.aggregate([{$match:{createdAt: { $gt: startDate, $lt: endDate}}},{$group:{_id:"$product.brand", count:{$sum:1}, profit:{$sum:"$product.price"}}}])
-
-   console.log(categories);
-
-
-//   let categories= await categoryModel.find({_id:{$in:categoryIds}}, {category:1}).lean()
-//   categories.forEach((item, index)=>{
-//     categories[index].count= category[item._id].count
-//     categories[index].profit= category[item._id].total
-//   })
- 
     res.render('admin/salesReport',{totalOrders,totalDispatch,totalRevenue,totalAmount,totalDiscount,totalPending,admin:req.session.admin.admin,
         startDate:moment(new Date(startDate).setDate(new Date(startDate).getDate() + 1)).utc().format('YYYY-MM-DD'),
     endDate:moment(endDate).utc().format('YYYY-MM-DD'),filter,orderTable,order,categories,byBrand,})
