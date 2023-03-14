@@ -599,7 +599,8 @@ const applyWallet=async(req,res)=>{
 
 
 const orderplacement = async (req, res) => {
-  console.log(req.body)
+  try{
+ 
   if (req.body.payment == 'cod') {
     let discountAmount = 0
     const coupon = await couponModel.findOne({ code: req.body.coupon })
@@ -729,6 +730,9 @@ console.log(req.session.userDetails);
         console.error(error);
       });
   }
+} catch(err){
+  console.log(err);
+}
 }
 const paymenturl=async(req,res)=>{
   try {

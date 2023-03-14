@@ -40,4 +40,4 @@ app.use('/admin', adminRouter)
 
 
 
-app.listen(8888, () => { console.log('server is running at', 7777) })
+app.listen(7777, () => { console.log('server is running at', 7777) })

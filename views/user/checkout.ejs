@@ -193,7 +193,6 @@
         {
           wallet:document.getElementById('wallet').value,orginalAmount
         }).then((resp)=>{
-          console.log(resp)
           document.getElementById('totalAmount').innerHTML=resp.data.total;
           document.getElementById('wallet').value=resp.data.wallet;
         })
