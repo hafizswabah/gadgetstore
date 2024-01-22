@@ -17,6 +17,10 @@
     padding: 10px;
     padding-top: 30px;
 }
+.n-side-item:hover{
+    background-color: black;
+    color: white;
+}
 .n-sidebar-container a{
     text-decoration: none;
     color: black;

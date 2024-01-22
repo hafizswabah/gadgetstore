@@ -5,6 +5,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="shortcut icon" href="/img/AppIcon.webp" type="image/x-icon">
   <link rel="stylesheet" href="/css/login.css">
   <title>Gadgets.store</title>
 </head>
@@ -27,7 +28,7 @@
             </div>
             <div class="input-group">
               <i class='bx bx-mail-send'></i>
-              <input type="number" placeholder="Phone Number" minlength="10" maxlength="10" id="signupPhonenumber" >
+              <input type="number" placeholder="Phone Number" minlength="10" maxlength="10" id="signupPhonenumber">
             </div>
             <div class="input-group">
               <i class='bx bxs-lock-alt'></i>
@@ -74,17 +75,17 @@
               <input type="password" name="password" id="loginPassword" placeholder="Password">
             </div>
             <div class="input-group">
-              <b style="color: red;"  id="loginMessage"></b>
+              <b style="color: red;" id="loginMessage"></b>
             </div>
             <button type="submit">
               Sign in
             </button>
             <p>
               <a href="/forget">
-              <b>
-                Forgot password?
-              </b>
-            </a>
+                <b>
+                  Forgot password?
+                </b>
+              </a>
             </p>
             <p>
               <span>
@@ -96,9 +97,16 @@
             </p>
           </form>
 
-<!-- end login form -->
+
+          <!-- end login form -->
         </div>
         <div class="form-wrapper">
+          <button class="demo-login" style="margin-top: 40px;" onclick="demoLoginUser()">
+            Demo Login As User
+          </button>
+          <button class="demo-login" style="margin-top: 40px;" onclick="demoLoginAdmin()">
+            Demo Login As Admin
+          </button>
 
         </div>
       </div>
@@ -127,7 +135,7 @@
         </div>
         <div class="text sign-up">
           <h2>
-            Join with us 
+            Join with us
           </h2>
 
         </div>
@@ -150,7 +158,7 @@
 
   loginForm.addEventListener('submit', async (e) => {
     e.preventDefault();
-  let res = await axios.post('/login', {
+    let res = await axios.post('/login', {
       email: document.getElementById('loginEmail').value,
       password: document.getElementById('loginPassword').value
     })
@@ -164,31 +172,55 @@
 
 
 
-  let signupForm=document.getElementById('signupForm')
+  let signupForm = document.getElementById('signupForm')
   console.log(signupForm);
 
-  let signupMessage=document.getElementById('signupMessage')
+  let signupMessage = document.getElementById('signupMessage')
   console.log(signupMessage);
 
-  signupForm.addEventListener('submit',async (e)=>{
+  signupForm.addEventListener('submit', async (e) => {
     e.preventDefault()
-    let res=await axios.post('/signup',{
-name:document.getElementById('signupUserName').value,
-email:document.getElementById('signupEmail').value,
-phoneNumber:document.getElementById('signupPhonenumber').value,
-password:document.getElementById('signupPassword').value,
-confirmPassword:document.getElementById('signupConfirmPassword').value
+    let res = await axios.post('/signup', {
+      name: document.getElementById('signupUserName').value,
+      email: document.getElementById('signupEmail').value,
+      phoneNumber: document.getElementById('signupPhonenumber').value,
+      password: document.getElementById('signupPassword').value,
+      confirmPassword: document.getElementById('signupConfirmPassword').value
     })
-    if(res.data.error)
-    {
-      signupMessage.innerText=res.data.message
-    }
-    else window.location.href='/otp-page'
+    if (res.data.error) {
+      signupMessage.innerText = res.data.message
+    } else window.location.href = '/otp-page'
   })
 
-  // setTimeout(() => {
-  //   container.classList.add('sign-in')
-  // }, 200)
+  async function demoLoginUser() {
+    let loginMessage = document.getElementById('loginMessage')
+    let email = "swabahhafizamb@gmail.com";
+    let password = 123;
+    let response = await axios.post('/login', {
+      email,
+      password
+    })
+    if (response.data.error) {
+      loginMessage.innerText = response.data.message;
+    } else {
+      window.location.href = '/'
+    }
+  }
+  async function demoLoginAdmin() {
+    let loginMessage = document.getElementById('loginMessage')
+    let email = "Admin@gmail.com";
+    let password = 123;
+    let response = await axios.post('/admin/loginAdmin', {
+      email,
+      password
+    })
+    if (response.data.error) {
+      loginMessage.innerText = response.data.message;
+    } else {
+      window.location.href = '/admin/dashboard'
+    }
+  }
+
 </script>
 
 </html>

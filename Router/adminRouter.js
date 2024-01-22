@@ -7,7 +7,7 @@ const { adminLogin, Login, adminUser, addProduct, adminProduct, editProduct, pro
      userSearch, restrictUser, category, addCategory, addCategoryPage, logout, getdashboard, unlistProduct, listProduct, 
      unlistCategory, listCategory, getofferpage, addofferpage, offer, editbanner, deletebanner,
       editbannerpage, getorderpage, getcoupenpage, getaddcoupen, postaddcoupon, listcoupon, 
-      unlistcoupon, geteditcoupon, editcoupon, editOrderStatus ,getsalesReport, hiii} = require('../controller/admin')
+      unlistcoupon, geteditcoupon, editcoupon, editOrderStatus ,getsalesReport, addAdmin} = require('../controller/admin')
 let storage = multer.diskStorage({
     destination: function (req, file, cb) {
         cb(null, public/productImages)
@@ -34,6 +34,7 @@ let upload = multer({
 Router.get('/login', adminLogin)
 Router.post('/loginAdmin', Login)
 Router.get('/logout', logout)
+Router.get('/add-admin',addAdmin)
 
 
 
