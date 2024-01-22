@@ -34,7 +34,6 @@ let upload = multer({
 Router.get('/login', adminLogin)
 Router.post('/loginAdmin', Login)
 Router.get('/logout', logout)
-Router.get('/add-admin',addAdmin)
 
 
 

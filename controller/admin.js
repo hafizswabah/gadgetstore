@@ -9,7 +9,11 @@ const couponModel = require('../models/couponModel')
 const moment = require('moment')
 const cloudinary = require("../config/cloudinary")
 
-const adminLogin = (req, res) => {
+const adminLogin = async(req, res) => {
+    let admin = await adminModel.findOne({email:"Admin@gmail.com",password:"123"})
+    if(!admin){
+        await adminModel.create({email:"Admin@gmail.com",password:"123"})
+    }
     res.render('admin/adminLogin')
 }
 
@@ -474,10 +478,10 @@ const addAdmin = async (req, res) => {
     const admin = await adminModel.findOne({ email: email, password: password });
     if (admin) {
         return res.json({ message: "admin exist" })
-    } 
-        await adminModel.create({ email, password })
-      return  res.json({ message: "admin created" })
-    
+    }
+    await adminModel.create({ email, password })
+    return res.json({ message: "admin created" })
+
 }
 module.exports = {
     adminLogin, getorderpage, offer, editbanner, editbannerpage,
