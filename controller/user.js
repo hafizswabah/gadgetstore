@@ -69,10 +69,10 @@ const signup = async (req, res) => {
   var mailOptions = {
     from: 'swabah.a.avd121@gmail.com',
     to: req.body.email,
-    subject: "G-CART Email verification",
+    subject: "Gadget Store Mail verification",
     html: `
-          <h1>Verify Your Email For G-CART</h1>
-          <h3>use this code to verify your email</h3>
+          <h1>Verify Your Email For Gadget Store</h1>
+          <h3>use this Otp to verify your email</h3>
           <h2>${randomOtp}</h2>
           `,
   }
