@@ -9,6 +9,63 @@
   <link rel="stylesheet" href="/css/login.css">
   <title>Gadgets.store</title>
 </head>
+<style>
+  .dropdown {
+    position: relative;
+    display: inline-block;
+    margin-top: 40px;
+  }
+
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f1f1f1;
+    width: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+  }
+
+  .dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: flex;
+    justify-content: center;
+    border-bottom: 1px solid #ddd;
+    /* Add border bottom */
+  }
+
+  .dropdown-content a:last-child {
+    border-bottom: none;
+    /* Remove border bottom for the last item */
+  }
+
+  .dropdown:hover .dropdown-content {
+    display: block;
+  }
+
+  .dropbtn {
+    padding: 13px;
+    background-color: #091036;
+    color: white;
+    margin: 5px;
+    border-radius: 14px;
+    width: 381px;
+    font-size: 16px;
+    outline: none;
+    border: 2px solid transparent;
+
+  }
+
+  .dropbtn:hover {
+    background-color: white;
+    color: #0a1852;
+    border: 1px solid black;
+    transition: all 0.4s;
+  }
+</style>
 
 <body>
   <div id="container" class="container sign-in">
@@ -101,12 +158,13 @@
           <!-- end login form -->
         </div>
         <div class="form-wrapper">
-          <button class="demo-login" style="margin-top: 40px;" onclick="demoLoginUser()">
-            Demo Login As User
-          </button>
-          <button class="demo-login" style="margin-top: 40px;" onclick="demoLoginAdmin()">
-            Demo Login As Admin
-          </button>
+          <div class="dropdown">
+            <button class="dropbtn" onclick="closeDropdown(false)">Demo Login</button>
+            <div class="dropdown-content">
+              <a href="#" onclick="demoLoginUser(true)">Demo User</a> <!-- Close dropdown on click -->
+              <a href="#" onclick="demoLoginAdmin(true)">Demo Admin</a> <!-- Close dropdown on click -->
+            </div>
+          </div>
 
         </div>
       </div>
@@ -192,10 +250,17 @@
     } else window.location.href = '/otp-page'
   })
 
-  async function demoLoginUser() {
+  async function demoLoginUser(value) {
+    if (value) {
+      var dropdownContent = document.querySelector('.dropdown-content');
+      dropdownContent.style.display = 'none'; // Hide the dropdown content
+    } else {
+      var dropdownContent = document.querySelector('.dropdown-content');
+      dropdownContent.style.display = 'block'; // Hide the dropdown content
+    }
     let loginMessage = document.getElementById('loginMessage')
-    let email = "hafizswabahamb@gmail.com";
-    let password = 12345;
+    let email = "swabahcareers@gmail.com";
+    let password = 123;
     let response = await axios.post('/login', {
       email,
       password
@@ -206,7 +271,14 @@
       window.location.href = '/'
     }
   }
-  async function demoLoginAdmin() {
+  async function demoLoginAdmin(value) {
+    if (value) {
+      var dropdownContent = document.querySelector('.dropdown-content');
+      dropdownContent.style.display = 'none'; // Hide the dropdown content
+    } else {
+      var dropdownContent = document.querySelector('.dropdown-content');
+      dropdownContent.style.display = 'block'; // Hide the dropdown content
+    }
     let loginMessage = document.getElementById('loginMessage')
     let email = "Admin@gmail.com";
     let password = 123;
@@ -220,7 +292,15 @@
       window.location.href = '/admin/dashboard'
     }
   }
-
+  function closeDropdown(value){
+    if (value) {
+      var dropdownContent = document.querySelector('.dropdown-content');
+      dropdownContent.style.display = 'none'; // Hide the dropdown content
+    } else {
+      var dropdownContent = document.querySelector('.dropdown-content');
+      dropdownContent.style.display = 'block'; // Hide the dropdown content
+    }
+  }
 </script>
 
 </html>
