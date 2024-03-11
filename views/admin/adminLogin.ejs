@@ -9,6 +9,13 @@
   <link rel="shortcut icon" href="/img/AppIcon.webp" type="image/x-icon">
   <title>Gadgets.store</title>
 </head>
+<style>
+.back-btn{
+  text-decoration: none;
+  color: #091036;
+font-size: 15px;
+}
+</style>
 
 <body>
   <div id="container" class="container sign-in">
@@ -16,7 +23,7 @@
     <div class="row">
       <!-- SIGN UP -->
       <div class="col align-items-center flex-col sign-up">
-       
+
 
       </div>
       <!-- END SIGN UP -->
@@ -35,7 +42,7 @@
               <i class='bx bxs-user'></i>
               <input type="password" name="password" id="password" placeholder='Enter Admin Password'>
             </div>
-           
+
             <div class="input-group">
               <b class="text-danger" id="otpMessage"></b>
             </div>
@@ -44,19 +51,18 @@
             </button>
             <p>
               <b>
-              
+                <a href="https://gadgetstore.swabah.site/" class="back-btn">Back to user home</a>
               </b>
             </p>
             <p>
               <span>
-           
+
               </span>
-             
+
             </p>
           </form>
         </div>
         <div class="form-wrapper">
-
         </div>
       </div>
       <!-- END SIGN IN -->
@@ -68,9 +74,9 @@
       <div class="col align-items-center flex-col">
         <div class="text sign-in">
           <h2>
-      WELCOME 
+            WELCOME
           </h2>
-          
+
 
         </div>
         <div class="img sign-in">
@@ -87,7 +93,6 @@
 </body>
 <script src="https://unpkg.com/axios@1.1.2/dist/axios.min.js"></script>
 <script>
-
   let otpForm = document.getElementById('otpForm');
   let otpMessage = document.getElementById('otpMessage')
   otpForm.addEventListener('submit', async (e) => {
@@ -95,7 +100,7 @@
     let res = await axios.post('/admin/loginAdmin', {
       email: document.getElementById('email').value,
       password: document.getElementById('password').value,
-    
+
     })
 
     if (res.data.error) {
@@ -104,7 +109,6 @@
       window.location.href = '/admin/dashboard'
     }
   })
-
 </script>
 
 </html>
