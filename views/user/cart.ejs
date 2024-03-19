@@ -127,7 +127,7 @@
                     <h5>Subtotal</h5>
                   </td>
                   <td>
-                    <h5><%=totalAmount%>.₹</h5>
+                    <h5 id="totalAmount"><%=totalAmount%></h5>
                   </td>
                 </tr>
 
@@ -157,10 +157,10 @@ async function addquantity(id, price){
   if(data.success){
     let qunatityBox=document.getElementById('q'+id);
     let priceBox=document.getElementById('p'+id);
+    let totalAmount=document.getElementById('totalAmount')
     qunatityBox.value=Number(qunatityBox.value)+1;
     priceBox.innerText=Number(price)*Number(qunatityBox.value);
-
-    
+    totalAmount.innerText=Number(totalAmount.innerText)+Number(price)
   }else{
     window.location.reload()
   }
@@ -171,10 +171,10 @@ async function minusQuantity(id, price){
   if(data.success){
     let qunatityBox=document.getElementById('q'+id);
     let priceBox=document.getElementById('p'+id);
-
+    let totalAmount=document.getElementById('totalAmount')
     qunatityBox.value=Number(qunatityBox.value)-1;
     priceBox.innerText=Number(price)*Number(qunatityBox.value);
-
+    totalAmount.innerText=Number(totalAmount.innerText)-Number(price)
   }else{
     window.location.reload()
   }
