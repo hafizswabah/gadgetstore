@@ -727,7 +727,7 @@ const orderplacement = async (req, res) => {
           },
 
           order_meta: {
-            return_url: "https://gadgets.swabah.online/return?order_id={order_id}"
+            return_url: "https://gadgets.swabah.site/return?order_id={order_id}"
           },
         },
       };
