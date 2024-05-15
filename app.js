@@ -36,8 +36,5 @@ app.use(function (req, res, next) {
 
 app.use('/', userRouter)
 app.use('/admin', adminRouter)
-
-
-
-
-app.listen(8888, () => { console.log('server is running at', 7777) })
+const port=8888;
+app.listen(port, () => { console.log('server is running at', port) })
