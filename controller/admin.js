@@ -10,11 +10,16 @@ const moment = require('moment')
 const cloudinary = require("../config/cloudinary")
 
 const adminLogin = async(req, res) => {
-    let admin = await adminModel.findOne({email:"Admin@gmail.com",password:"123"})
-    if(!admin){
-        await adminModel.create({email:"Admin@gmail.com",password:"123"})
+    // let admin = await adminModel.findOne({email:"Admin@gmail.com",password:"123"})
+    // if(!admin){
+    //     await adminModel.create({email:"Admin@gmail.com",password:"123"})
+    // }
+    try{
+
+        res.render('admin/adminLogin')
+    }catch(err){
+        console.error("admin page rendering issue",err)
     }
-    res.render('admin/adminLogin')
 }
 
 const Login = async (req, res) => {
@@ -38,7 +43,7 @@ const Login = async (req, res) => {
         }
     }
     else {
-        if (email == staff?.email && password == staff?.password) {
+        if (email === staff?.email && password == staff?.password) {
             req.session.admin = { id: staff?._id, admin: false }
             return res.json({ error: false })
         }
