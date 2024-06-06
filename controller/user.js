@@ -21,8 +21,6 @@ const loginPage = (req, res) => {
 const homePage = async (req, res) => {
   const products = await productModel.find().limit(9).lean()
   const offer = await bannerModel.find().lean()
-  console.log(products);
-  console.log(offer);
   let login = false
   if (req.session.user) {
     login = true
@@ -35,7 +33,6 @@ const homePage = async (req, res) => {
 const signup = async (req, res) => {
   const { email, name, password, phoneNumber } = req.body;
   const userDetails = await userModel.findOne({ email })
-  console.log(req.body);
   if (userDetails) {
     const message = 'already signed up'
     return res.json({ error: true, message })
@@ -96,7 +93,6 @@ const otpforgot = (req, res) => {
 }
 
 const otp = async (req, res) => {
-  console.log(req.body);
   if (req.session.tempUser.otp == req.body.otp) {
     const { name, email, password, phoneNumber } = req.session.tempUser;
     const user = await userModel.create({
@@ -118,7 +114,6 @@ const otp = async (req, res) => {
 
 const login = async (req, res) => {
   const { email, password } = req.body
-  console.log(req.body)
   const userExist = await userModel.findOne({ email: req.body.email })
 
   if (!userExist) {
@@ -170,8 +165,6 @@ const otpVerificationPage = (req, res) => {
 
 const forget = async (req, res) => {
   const mailId = await userModel.findOne({ email: req.body.email })
-  console.log(req.body);
-  console.log(mailId);
   if (mailId) {
     var randomOtp = Math.floor(Math.random() * 1000000)
     req.session.tempUser = { email: req.body.email, otp: randomOtp }
@@ -315,22 +308,17 @@ const productinfo = async (req, res) => {
       }))
     }
     let wish
-    console.log(whishlistItems)
-    console.log(req.params.id)
 
     if (whishlistItems.includes(req.params.id)) {
 
-      console.log('enter')
 
       wish = true
 
 
     } else {
-      console.log('not ')
       wish = false
 
     }
-    console.log(product)
     res.render('user/product', { product, wish })
   } catch (err) {
     res.json(err)
@@ -460,10 +448,7 @@ const addingAddress = async (req, res) => {
 const userProfile = async (req, res) => {
   const userId = req.session.user.id
   const user = await userModel.findOne(({ _id: userId }))
-
-
   const address = await userModel.findOne({ _id: userId }, { address: 1 })
-  console.log(address);
   res.render('user/userProfile', { user, address })
 }
 const checkoutpage = async (req, res) => {
@@ -471,6 +456,7 @@ const checkoutpage = async (req, res) => {
   const wallet = await userModel.findOne({ _id: req.session.user.id }, { wallet: 1 })
   const _id = req.session.user.id
   const { cart } = await userModel.findOne({ _id }, { cart: 1 })
+  
   const cartItems = cart.map((item) => {
     return item.id
   })
@@ -526,7 +512,6 @@ const orderplace = (req, res) => {
 
 const orderHistory = async (req, res) => {
   const orders = await orderModel.find({ userId: req.session.user.id }).lean()
-  console.log(orders);
   res.render('user/orderhistory', { orders })
 }
 
@@ -561,8 +546,6 @@ const applycoupon = async (req, res) => {
   }
 }
 const applyWallet = async (req, res) => {
-  console.log(req.user)
-  console.log(req.body);
   const {wallet:userWallet} =await userModel.findOne({_id:req.session.user.id}, {wallet:1});
 
   if (userWallet > parseInt(req.body.orginalAmount)) {
